@@ -3,15 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ShoreBreath Timer</title>
+    <title>Breathing App</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>ShoreBreath Timer</h1>
+    <h1>Breathing App</h1>
+
+    <!-- Timer and Breathing Bubble -->
     <div id="timer">
       <p id="instruction">Press Start to begin.</p>
       <div id="circle"></div>
     </div>
+
+    <!-- Breathing Technique Dropdown -->
     <div id="preset-techniques">
       <label for="technique">Choose a Breathing Technique:</label>
       <select id="technique">
@@ -21,18 +25,18 @@
         <option value="2to1">2:1 Ratio Breathing (4-8)</option>
       </select>
     </div>
+
+    <!-- Start and Stop Buttons -->
     <div id="controls">
       <button id="start">Start</button>
-      <button id="stop">Stop</button>
+      <button id="stop" disabled>Stop</button>
     </div>
 
-    <!-- Background Sound Selection -->
+    <!-- Background Sound Controls -->
     <div id="background-sound-controls">
       <label for="background-sound">Background Sound:</label>
       <select id="background-sound">
-        <option value="rain">Rain</option>
-        <option value="river">Running Stream</option>
-        <option value="fire">Crackling Fire</option>
+        <!-- Options will be dynamically populated -->
       </select>
       <label for="background-volume">Volume:</label>
       <input
@@ -45,13 +49,13 @@
       />
     </div>
 
-    <!-- Cue Sound Settings -->
+    <!-- Cue Sound Controls -->
     <div id="cue-sound-controls">
       <label>
         <input type="checkbox" id="cue-toggle" checked />
         Enable Cue Sounds
       </label>
-      <label for="cue-volume">Volume:</label>
+      <label for="cue-volume">Cue Volume:</label>
       <input
         type="range"
         id="cue-volume"

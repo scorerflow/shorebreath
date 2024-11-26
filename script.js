@@ -6,6 +6,8 @@ const stopButton = document.getElementById("stop");
 const techniqueDropdown = document.getElementById("technique");
 const cueToggle = document.getElementById("cue-toggle");
 const cueVolumeSlider = document.getElementById("cue-volume");
+const backgroundSoundDropdown = document.getElementById("background-sound");
+const backgroundVolumeSlider = document.getElementById("background-volume");
 
 // Configuration object for the app
 const appConfig = {
@@ -14,6 +16,11 @@ const appConfig = {
     inhale: "audio/bowl.mp3",
     exhale: "audio/windchime.mp3",
   },
+  backgroundSounds: {
+    rain: "audio/rain.mp3",
+    river: "audio/river.mp3",
+    fire: "audio/fire.mp3",
+  },
   techniques: {
     box: [4000, 4000, 4000, 4000], // Box Breathing
     478: [4000, 7000, 8000], // 4-7-8 Breathing
@@ -21,9 +28,9 @@ const appConfig = {
     "2to1": [4000, 8000], // 2:1 Ratio Breathing
   },
   phaseLabels: {
-    2: ["Inhale...", "Exhale..."], // Two-phase techniques
-    3: ["Inhale...", "Hold...", "Exhale..."], // Three-phase techniques
-    4: ["Inhale...", "Hold...", "Exhale...", "Hold..."], // Four-phase techniques
+    2: ["Inhale...", "Exhale..."],
+    3: ["Inhale...", "Hold...", "Exhale..."],
+    4: ["Inhale...", "Hold...", "Exhale...", "Hold..."],
   },
 };
 
@@ -33,15 +40,40 @@ Object.entries(appConfig.audioFiles).forEach(([key, path]) => {
   cueSounds[key] = new Audio(path);
 });
 
-// Set default volumes for cue sounds
-Object.values(cueSounds).forEach((sound) => {
-  sound.volume = parseFloat(cueVolumeSlider.value); // Set initial volume
+// Initialize background sound elements
+const backgroundSounds = {};
+Object.entries(appConfig.backgroundSounds).forEach(([key, path]) => {
+  backgroundSounds[key] = new Audio(path);
+  backgroundSounds[key].loop = true; // Ensure seamless looping
 });
 
-// Handle cue volume changes
+// Dynamically populate background sound dropdown
+function populateBackgroundSoundDropdown() {
+  backgroundSoundDropdown.innerHTML = ""; // Clear existing options to avoid duplicates
+
+  Object.keys(appConfig.backgroundSounds).forEach((key) => {
+    const option = document.createElement("option");
+    option.value = key;
+    option.textContent = key.charAt(0).toUpperCase() + key.slice(1); // Capitalize first letter
+    backgroundSoundDropdown.appendChild(option);
+  });
+}
+
+// Populate dropdown on page load
+populateBackgroundSoundDropdown();
+
+// Volume control for cue sounds
 cueVolumeSlider.addEventListener("input", () => {
   const volume = parseFloat(cueVolumeSlider.value);
   Object.values(cueSounds).forEach((sound) => {
+    sound.volume = volume;
+  });
+});
+
+// Volume control for background sounds
+backgroundVolumeSlider.addEventListener("input", () => {
+  const volume = parseFloat(backgroundVolumeSlider.value);
+  Object.values(backgroundSounds).forEach((sound) => {
     sound.volume = volume;
   });
 });
@@ -73,6 +105,28 @@ function resetBreathingState() {
   startButton.disabled = false;
   stopButton.disabled = true;
 }
+
+// Function to play selected background sound
+function playBackgroundSound() {
+  const selectedSoundKey = backgroundSoundDropdown.value;
+  Object.values(backgroundSounds).forEach((sound) => {
+    sound.pause(); // Pause all sounds first
+  });
+  if (selectedSoundKey && backgroundSounds[selectedSoundKey]) {
+    backgroundSounds[selectedSoundKey].play();
+  }
+}
+
+// Stop all background sounds
+function stopBackgroundSounds() {
+  Object.values(backgroundSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0; // Reset to the start
+  });
+}
+
+// Update background sound on dropdown change
+backgroundSoundDropdown.addEventListener("change", playBackgroundSound);
 
 // Handle dropdown technique change
 techniqueDropdown.addEventListener("change", () => {
@@ -107,11 +161,11 @@ function playCueSound(phase) {
 // Function to start the breathing timer
 function startBreathing() {
   resetBreathingState(); // Reset any lingering states before starting
-  isBreathing = true; // Set breathing to active
+  isBreathing = true;
   startButton.disabled = true;
   stopButton.disabled = false;
 
-  // Begin the breathing cycle
+  playBackgroundSound(); // Start background sound
   runPhase();
 }
 
@@ -137,6 +191,7 @@ function runPhase() {
 // Function to stop the breathing timer
 function stopBreathing() {
   resetBreathingState();
+  stopBackgroundSounds(); // Stop background sound
 }
 
 // Function to update the instruction text dynamically

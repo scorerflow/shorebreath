@@ -1,55 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShoreBreath Timer</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <h1>ShoreBreath Timer</h1>
     <div id="timer">
-        <p id="instruction">Press Start to begin.</p>
-        <div id="circle"></div>
+      <p id="instruction">Press Start to begin.</p>
+      <div id="circle"></div>
     </div>
     <div id="preset-techniques">
-        <label for="technique">Choose a Breathing Technique:</label>
-        <select id="technique">
-            <option value="box">Box Breathing (4-4-4-4)</option>
-            <option value="478">4-7-8 Breathing</option>
-            <option value="resonant">Resonant Breathing (6-6)</option>
-            <option value="wimHof">Wim Hof Breathing</option>
-            <option value="2to1">2:1 Ratio Breathing (4-8)</option>
-        </select>
+      <label for="technique">Choose a Breathing Technique:</label>
+      <select id="technique">
+        <option value="box">Box Breathing (4-4-4-4)</option>
+        <option value="478">4-7-8 Breathing</option>
+        <option value="resonant">Resonant Breathing (6-6)</option>
+        <option value="2to1">2:1 Ratio Breathing (4-8)</option>
+      </select>
     </div>
     <div id="controls">
-        <button id="start">Start</button>
-        <button id="stop">Stop</button>
+      <button id="start">Start</button>
+      <button id="stop">Stop</button>
     </div>
 
     <!-- Background Sound Selection -->
     <div id="background-sound-controls">
-        <label for="background-sound">Background Sound:</label>
-        <select id="background-sound">
-            <option value="rain">Rain</option>
-            <option value="river">River</option>
-            <option value="fire">Fire</option>
-        </select>
-        <label for="background-volume">Volume:</label>
-        <input type="range" id="background-volume" min="0" max="1" step="0.1" value="0.5">
+      <label for="background-sound">Background Sound:</label>
+      <select id="background-sound">
+        <option value="rain">Rain</option>
+        <option value="river">Running Stream</option>
+        <option value="fire">Crackling Fire</option>
+      </select>
+      <label for="background-volume">Volume:</label>
+      <input
+        type="range"
+        id="background-volume"
+        min="0"
+        max="1"
+        step="0.1"
+        value="0.5"
+      />
     </div>
 
     <!-- Cue Sound Settings -->
     <div id="cue-sound-controls">
-        <label>
-            <input type="checkbox" id="cue-toggle" checked>
-            Enable Cue Sounds
-        </label>
-        <label for="cue-volume">Volume:</label>
-        <input type="range" id="cue-volume" min="0" max="1" step="0.1" value="0.8">
+      <label>
+        <input type="checkbox" id="cue-toggle" checked />
+        Enable Cue Sounds
+      </label>
+      <label for="cue-volume">Volume:</label>
+      <input
+        type="range"
+        id="cue-volume"
+        min="0"
+        max="1"
+        step="0.1"
+        value="0.8"
+      />
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
-

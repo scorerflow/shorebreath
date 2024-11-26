@@ -4,56 +4,109 @@ const circle = document.getElementById("circle"); // Circle element
 const startButton = document.getElementById("start");
 const stopButton = document.getElementById("stop");
 const techniqueDropdown = document.getElementById("technique");
-const audioToggle = document.getElementById("audio-toggle"); // Mute/unmute toggle
+const cueToggle = document.getElementById("cue-toggle");
+const cueVolumeSlider = document.getElementById("cue-volume");
 
-// Load audio files
-const audioCues = {
-  inhale: new Audio("audio/inhale.mp3"),
-  exhale: new Audio("audio/exhale.mp3"),
-  hold: new Audio("audio/hold.mp3"),
+// Configuration object for the app
+const appConfig = {
+  defaultTechnique: "box",
+  audioFiles: {
+    inhale: "audio/bowl.mp3",
+    exhale: "audio/windchime.mp3",
+  },
+  techniques: {
+    box: [4000, 4000, 4000, 4000], // Box Breathing
+    478: [4000, 7000, 8000], // 4-7-8 Breathing
+    resonant: [6000, 6000], // Resonant Breathing
+    "2to1": [4000, 8000], // 2:1 Ratio Breathing
+  },
+  phaseLabels: {
+    2: ["Inhale...", "Exhale..."], // Two-phase techniques
+    3: ["Inhale...", "Hold...", "Exhale..."], // Three-phase techniques
+    4: ["Inhale...", "Hold...", "Exhale...", "Hold..."], // Four-phase techniques
+  },
 };
 
-// Preload audio files
-Object.values(audioCues).forEach((audio) => {
-  audio.load();
+// Initialize audio objects dynamically from appConfig
+const cueSounds = {};
+Object.entries(appConfig.audioFiles).forEach(([key, path]) => {
+  cueSounds[key] = new Audio(path);
 });
 
-// Mute/Unmute handling
-audioToggle.addEventListener("change", () => {
-  const muted = !audioToggle.checked;
-  Object.values(audioCues).forEach((audio) => {
-    audio.muted = muted;
+// Set default volumes for cue sounds
+Object.values(cueSounds).forEach((sound) => {
+  sound.volume = parseFloat(cueVolumeSlider.value); // Set initial volume
+});
+
+// Handle cue volume changes
+cueVolumeSlider.addEventListener("input", () => {
+  const volume = parseFloat(cueVolumeSlider.value);
+  Object.values(cueSounds).forEach((sound) => {
+    sound.volume = volume;
   });
 });
 
-// Function to play audio
-function playAudio(audio) {
-  if (!audioToggle.checked) return; // Skip if audio is disabled
-  audio.currentTime = 0; // Reset playback position
-  audio.play();
-}
+// Handle cue mute toggle
+cueToggle.addEventListener("change", () => {
+  const isMuted = !cueToggle.checked;
+  Object.values(cueSounds).forEach((sound) => {
+    sound.muted = isMuted;
+  });
+});
 
-// Define preset breathing techniques
-const techniques = {
-  box: [4000, 4000, 4000, 4000], // Box Breathing
-  478: [4000, 7000, 8000], // 4-7-8 Breathing
-  resonant: [6000, 6000], // Resonant Breathing
-  wimHof: "wimHof", // Wim Hof Breathing
-  "2to1": [4000, 8000], // 2:1 Ratio Breathing
-};
-
-let phaseDurations = techniques["box"]; // Default technique
+let phaseDurations = appConfig.techniques[appConfig.defaultTechnique]; // Default technique
 let isBreathing = false; // Track if the timer is running
 let currentPhase = 0; // Track the current phase index
 let activeTimer = null; // Store the current active timeout/interval
 
+// Function to reset breathing state
+function resetBreathingState() {
+  clearTimeout(activeTimer); // Clear any running timer
+  isBreathing = false; // Set breathing to inactive
+  currentPhase = 0; // Reset phase
+  Object.values(cueSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0; // Reset playback position
+  });
+  instruction.textContent = "Press Start to begin.";
+  resetCircleAnimation();
+  startButton.disabled = false;
+  stopButton.disabled = true;
+}
+
+// Handle dropdown technique change
+techniqueDropdown.addEventListener("change", () => {
+  resetBreathingState(); // Reset state on technique switch
+  const selectedTechnique = techniqueDropdown.value;
+  phaseDurations =
+    appConfig.techniques[selectedTechnique] ||
+    appConfig.techniques[appConfig.defaultTechnique]; // Default to Box if undefined
+});
+
+// Function to play the correct cue sound
+function playCueSound(phase) {
+  // Stop all cue sounds
+  Object.values(cueSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0; // Reset playback position
+  });
+
+  // Play the corresponding sound for the current phase
+  if (!cueToggle.checked) return; // Skip if cue sounds are muted
+
+  const isExhalePhase =
+    (phaseDurations.length === 2 && phase === 1) ||
+    (phaseDurations.length > 2 && phase === 2);
+  if (phase === 0) {
+    cueSounds.inhale.play(); // Play "Inhale" sound
+  } else if (isExhalePhase) {
+    cueSounds.exhale.play(); // Play "Exhale" sound
+  }
+}
+
 // Function to start the breathing timer
 function startBreathing() {
-  if (techniqueDropdown.value === "wimHof") {
-    performWimHofBreathing();
-    return;
-  }
-
+  resetBreathingState(); // Reset any lingering states before starting
   isBreathing = true; // Set breathing to active
   startButton.disabled = true;
   stopButton.disabled = false;
@@ -68,8 +121,8 @@ function runPhase() {
 
   // Update the instruction text and start animation for the current phase
   updatePhaseText(currentPhase);
-  playAudioCue(currentPhase);
-  syncCircleAnimation(phaseDurations[currentPhase]);
+  playCueSound(currentPhase);
+  syncCircleAnimation(currentPhase, phaseDurations[currentPhase]);
 
   // Set a timeout for the current phase duration
   activeTimer = setTimeout(() => {
@@ -83,61 +136,32 @@ function runPhase() {
 
 // Function to stop the breathing timer
 function stopBreathing() {
-  clearTimeout(activeTimer); // Clear any running timer
-  isBreathing = false; // Set breathing to inactive
-  currentPhase = 0; // Reset the phase to the beginning
-
-  instruction.textContent = "Press Start to begin.";
-  resetCircleAnimation();
-  startButton.disabled = false;
-  stopButton.disabled = true;
+  resetBreathingState();
 }
 
 // Function to update the instruction text dynamically
 function updatePhaseText(phase) {
-  if (phaseDurations.length === 4) {
-    instruction.textContent = ["Inhale...", "Hold...", "Exhale...", "Hold..."][
-      phase
-    ];
-  } else if (phaseDurations.length === 3) {
-    instruction.textContent = ["Inhale...", "Hold...", "Exhale..."][phase];
-  } else if (phaseDurations.length === 2) {
-    instruction.textContent = phase === 0 ? "Inhale..." : "Exhale...";
-  }
-}
-
-// Function to play the correct audio cue
-function playAudioCue(phase) {
-  if (phaseDurations.length === 4) {
-    playAudio(
-      [audioCues.inhale, audioCues.hold, audioCues.exhale, audioCues.hold][
-        phase
-      ]
-    );
-  } else if (phaseDurations.length === 3) {
-    playAudio([audioCues.inhale, audioCues.hold, audioCues.exhale][phase]);
-  } else if (phaseDurations.length === 2) {
-    playAudio(phase === 0 ? audioCues.inhale : audioCues.exhale);
-  }
+  const labels = appConfig.phaseLabels[phaseDurations.length];
+  instruction.textContent = labels[phase] || "Exhale...";
 }
 
 // Function to sync the circle animation with the timer
-function syncCircleAnimation(duration) {
+function syncCircleAnimation(phase, duration) {
   if (!isBreathing) {
     resetCircleAnimation(); // Ensure no animation if timer is not running
     return;
   }
 
-  if (
-    instruction.textContent.includes("Inhale") ||
-    instruction.textContent.includes("Exhale")
-  ) {
-    circle.style.transition = `transform ${duration / 1000}s ease-in-out`;
-    circle.style.transform = instruction.textContent.includes("Inhale")
-      ? "scale(1.5)" // Expand on Inhale
-      : "scale(1)"; // Contract on Exhale
-  } else {
-    circle.style.transition = ""; // No animation during Hold
+  // Adjust animation for phases
+  const isExhalePhase =
+    (phaseDurations.length === 2 && phase === 1) ||
+    (phaseDurations.length > 2 && phase === 2);
+  circle.style.transition = `transform ${duration / 1000}s ease-in-out`;
+
+  if (phase === 0) {
+    circle.style.transform = "scale(1.5)"; // Expand on Inhale
+  } else if (isExhalePhase) {
+    circle.style.transform = "scale(1)"; // Contract on Exhale
   }
 }
 
@@ -146,76 +170,6 @@ function resetCircleAnimation() {
   circle.style.transition = "none"; // Ensure no lingering transitions
   circle.style.transform = "scale(1)"; // Reset to contracted state
 }
-
-// Function to perform Wim Hof Breathing
-function performWimHofBreathing() {
-  let rapidBreaths = 30; // Number of rapid breaths in one cycle
-  let isInhale = true; // Track whether it's inhale or exhale
-  let rapidBreathInterval = null; // Store the interval for rapid breaths
-
-  function startRapidBreaths() {
-    rapidBreathInterval = setInterval(() => {
-      if (!isBreathing) {
-        clearInterval(rapidBreathInterval);
-        resetCircleAnimation();
-        return;
-      }
-
-      // Update instructions and sync animation
-      instruction.textContent = isInhale ? "Inhale (2s)..." : "Exhale (2s)...";
-      syncCircleAnimation(2000); // 2 seconds for Wim Hof breathing
-      if (isInhale) playAudio(audioCues.inhale);
-      else playAudio(audioCues.exhale);
-      isInhale = !isInhale;
-
-      rapidBreaths--;
-
-      // End rapid breaths and move to breath-hold
-      if (rapidBreaths === 0) {
-        clearInterval(rapidBreathInterval);
-        startBreathHold();
-      }
-    }, 2000); // 2 seconds per breath
-  }
-
-  function startBreathHold() {
-    if (!isBreathing) return;
-
-    instruction.textContent = "Hold Breath...";
-    playAudio(audioCues.hold);
-    resetCircleAnimation(); // Stop animation during Hold
-
-    setTimeout(() => {
-      if (!isBreathing) return;
-
-      instruction.textContent = "Resume Breathing.";
-      rapidBreaths = 30; // Reset breath count for the next cycle
-      startRapidBreaths(); // Restart the cycle
-    }, 15000); // 15-second hold
-  }
-
-  // Start the first cycle of rapid breaths
-  startRapidBreaths();
-  isBreathing = true;
-  startButton.disabled = true;
-  stopButton.disabled = false;
-}
-
-// Listen for dropdown changes to reset the timer
-techniqueDropdown.addEventListener("change", () => {
-  stopBreathing(); // Stop any running timers
-  const selectedTechnique = techniqueDropdown.value;
-
-  if (selectedTechnique === "wimHof") {
-    instruction.textContent =
-      "Wim Hof: 30 rapid breaths (2s In/Out), then Hold.";
-    phaseDurations = []; // Wim Hof has its own logic
-  } else {
-    phaseDurations = techniques[selectedTechnique];
-    instruction.textContent = "Press Start to begin.";
-    resetCircleAnimation();
-  }
-});
 
 // Attach event listeners to Start and Stop buttons
 startButton.addEventListener("click", startBreathing);

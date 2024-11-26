@@ -149,38 +149,53 @@ function resetCircleAnimation() {
 
 // Function to perform Wim Hof Breathing
 function performWimHofBreathing() {
-  let rapidBreaths = 30;
-  let isInhale = true;
+  let rapidBreaths = 30; // Number of rapid breaths in one cycle
+  let isInhale = true; // Track whether it's inhale or exhale
+  let rapidBreathInterval = null; // Store the interval for rapid breaths
 
-  const rapidBreathInterval = setInterval(() => {
-    if (!isBreathing) {
-      clearInterval(rapidBreathInterval);
-      resetCircleAnimation();
-      return;
-    }
-
-    instruction.textContent = isInhale ? "Inhale (2s)..." : "Exhale (2s)...";
-    syncCircleAnimation(2000); // 2 seconds for Wim Hof breathing
-    if (isInhale) playAudio(audioCues.inhale);
-    else playAudio(audioCues.exhale);
-    isInhale = !isInhale;
-
-    rapidBreaths--;
-
-    if (rapidBreaths === 0) {
-      clearInterval(rapidBreathInterval);
-      if (isBreathing) {
-        instruction.textContent = "Hold Breath...";
-        playAudio(audioCues.hold);
-        resetCircleAnimation(); // Stop animation during Hold
-        activeTimer = setTimeout(() => {
-          instruction.textContent = "Resume Breathing.";
-          stopBreathing();
-        }, 15000); // 15-second hold
+  function startRapidBreaths() {
+    rapidBreathInterval = setInterval(() => {
+      if (!isBreathing) {
+        clearInterval(rapidBreathInterval);
+        resetCircleAnimation();
+        return;
       }
-    }
-  }, 2000); // 2-second intervals for inhale and exhale
 
+      // Update instructions and sync animation
+      instruction.textContent = isInhale ? "Inhale (2s)..." : "Exhale (2s)...";
+      syncCircleAnimation(2000); // 2 seconds for Wim Hof breathing
+      if (isInhale) playAudio(audioCues.inhale);
+      else playAudio(audioCues.exhale);
+      isInhale = !isInhale;
+
+      rapidBreaths--;
+
+      // End rapid breaths and move to breath-hold
+      if (rapidBreaths === 0) {
+        clearInterval(rapidBreathInterval);
+        startBreathHold();
+      }
+    }, 2000); // 2 seconds per breath
+  }
+
+  function startBreathHold() {
+    if (!isBreathing) return;
+
+    instruction.textContent = "Hold Breath...";
+    playAudio(audioCues.hold);
+    resetCircleAnimation(); // Stop animation during Hold
+
+    setTimeout(() => {
+      if (!isBreathing) return;
+
+      instruction.textContent = "Resume Breathing.";
+      rapidBreaths = 30; // Reset breath count for the next cycle
+      startRapidBreaths(); // Restart the cycle
+    }, 15000); // 15-second hold
+  }
+
+  // Start the first cycle of rapid breaths
+  startRapidBreaths();
   isBreathing = true;
   startButton.disabled = true;
   stopButton.disabled = false;

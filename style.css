@@ -1,0 +1,124 @@
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f0f8ff;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+#instruction {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Breathing Circle */
+#circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #82caff;
+  transform: scale(1); /* Default contracted state */
+  transition: none; /* Disable transitions by default */
+}
+
+/* Preset Techniques Dropdown */
+#preset-techniques {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#preset-techniques label {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+#preset-techniques select {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+#preset-techniques select:hover {
+  background-color: #e9ecef;
+}
+
+/* Start/Stop Buttons */
+#controls {
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:active {
+  background-color: #003f7f;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Audio Toggle */
+#audio-controls {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  #instruction {
+    font-size: 1.2rem;
+  }
+
+  #circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  #preset-techniques select {
+    font-size: 14px;
+  }
+}

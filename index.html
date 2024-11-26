@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShoreBreath Timer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>ShoreBreath Timer</h1>
+    <div id="timer">
+      <p id="instruction">Press Start to begin.</p>
+      <div id="circle"></div>
+    </div>
+    <div id="preset-techniques">
+      <label for="technique">Choose a Breathing Technique:</label>
+      <select id="technique">
+        <option value="box">Box Breathing (4-4-4-4)</option>
+        <option value="478">4-7-8 Breathing</option>
+        <option value="resonant">Resonant Breathing (6-6)</option>
+        <option value="wimHof">Wim Hof Breathing</option>
+        <option value="2to1">2:1 Ratio Breathing (4-8)</option>
+      </select>
+    </div>
+    <div id="controls">
+      <button id="start">Start</button>
+      <button id="stop">Stop</button>
+    </div>
+    <div id="audio-controls">
+      <label>
+        <input type="checkbox" id="audio-toggle" checked />
+        Enable Audio Cues
+      </label>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

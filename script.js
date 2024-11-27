@@ -34,18 +34,18 @@ const appConfig = {
   },
 };
 
-// Initialize audio objects dynamically from appConfig
-const cueSounds = {};
-Object.entries(appConfig.audioFiles).forEach(([key, path]) => {
-  cueSounds[key] = new Audio(path);
-});
+// Preload audio files
+const preloadAudio = (audioPaths) => {
+  return Object.entries(audioPaths).reduce((acc, [key, path]) => {
+    const audio = new Audio(path);
+    acc[key] = audio;
+    return acc;
+  }, {});
+};
 
-// Initialize background sound elements
-const backgroundSounds = {};
-Object.entries(appConfig.backgroundSounds).forEach(([key, path]) => {
-  backgroundSounds[key] = new Audio(path);
-  backgroundSounds[key].loop = true; // Ensure seamless looping
-});
+// Initialize cue and background sounds
+const cueSounds = preloadAudio(appConfig.audioFiles);
+const backgroundSounds = preloadAudio(appConfig.backgroundSounds);
 
 // Dynamically populate background sound dropdown
 function populateBackgroundSoundDropdown() {
@@ -63,33 +63,48 @@ function populateBackgroundSoundDropdown() {
 populateBackgroundSoundDropdown();
 
 // Volume control for cue sounds
-cueVolumeSlider.addEventListener("input", () => {
+function updateCueVolume() {
   const volume = parseFloat(cueVolumeSlider.value);
   Object.values(cueSounds).forEach((sound) => {
     sound.volume = volume;
   });
-});
+}
+cueVolumeSlider.addEventListener("input", updateCueVolume);
 
 // Volume control for background sounds
-backgroundVolumeSlider.addEventListener("input", () => {
+function updateBackgroundVolume() {
   const volume = parseFloat(backgroundVolumeSlider.value);
   Object.values(backgroundSounds).forEach((sound) => {
     sound.volume = volume;
   });
-});
+}
+backgroundVolumeSlider.addEventListener("input", updateBackgroundVolume);
 
 // Handle cue mute toggle
-cueToggle.addEventListener("change", () => {
+function toggleCueSounds() {
   const isMuted = !cueToggle.checked;
   Object.values(cueSounds).forEach((sound) => {
     sound.muted = isMuted;
   });
-});
+}
+cueToggle.addEventListener("change", toggleCueSounds);
 
 let phaseDurations = appConfig.techniques[appConfig.defaultTechnique]; // Default technique
 let isBreathing = false; // Track if the timer is running
 let currentPhase = 0; // Track the current phase index
 let activeTimer = null; // Store the current active timeout/interval
+
+// Function to manage background sound playback
+function manageBackgroundSound(play = false) {
+  const selectedSoundKey = backgroundSoundDropdown.value;
+  Object.values(backgroundSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0; // Reset sound
+  });
+  if (play && selectedSoundKey && backgroundSounds[selectedSoundKey]) {
+    backgroundSounds[selectedSoundKey].play();
+  }
+}
 
 // Function to reset breathing state
 function resetBreathingState() {
@@ -106,28 +121,6 @@ function resetBreathingState() {
   stopButton.disabled = true;
 }
 
-// Function to play selected background sound
-function playBackgroundSound() {
-  const selectedSoundKey = backgroundSoundDropdown.value;
-  Object.values(backgroundSounds).forEach((sound) => {
-    sound.pause(); // Pause all sounds first
-  });
-  if (selectedSoundKey && backgroundSounds[selectedSoundKey]) {
-    backgroundSounds[selectedSoundKey].play();
-  }
-}
-
-// Stop all background sounds
-function stopBackgroundSounds() {
-  Object.values(backgroundSounds).forEach((sound) => {
-    sound.pause();
-    sound.currentTime = 0; // Reset to the start
-  });
-}
-
-// Update background sound on dropdown change
-backgroundSoundDropdown.addEventListener("change", playBackgroundSound);
-
 // Handle dropdown technique change
 techniqueDropdown.addEventListener("change", () => {
   resetBreathingState(); // Reset state on technique switch
@@ -137,24 +130,26 @@ techniqueDropdown.addEventListener("change", () => {
     appConfig.techniques[appConfig.defaultTechnique]; // Default to Box if undefined
 });
 
-// Function to play the correct cue sound
+// Optimized function to play the correct cue sound
 function playCueSound(phase) {
-  // Stop all cue sounds
+  const labels = appConfig.phaseLabels[phaseDurations.length];
+  const phaseLabel = labels[phase];
+
+  // Dynamically map phases to sounds
+  const phaseToSound = {
+    "Inhale...": cueSounds.inhale,
+    "Exhale...": cueSounds.exhale,
+  };
+
+  // Pause all sounds first
   Object.values(cueSounds).forEach((sound) => {
     sound.pause();
-    sound.currentTime = 0; // Reset playback position
+    sound.currentTime = 0;
   });
 
-  // Play the corresponding sound for the current phase
-  if (!cueToggle.checked) return; // Skip if cue sounds are muted
-
-  const isExhalePhase =
-    (phaseDurations.length === 2 && phase === 1) ||
-    (phaseDurations.length > 2 && phase === 2);
-  if (phase === 0) {
-    cueSounds.inhale.play(); // Play "Inhale" sound
-  } else if (isExhalePhase) {
-    cueSounds.exhale.play(); // Play "Exhale" sound
+  // Play the sound if the phase has a mapped sound
+  if (phaseLabel in phaseToSound) {
+    phaseToSound[phaseLabel].play();
   }
 }
 
@@ -165,7 +160,7 @@ function startBreathing() {
   startButton.disabled = true;
   stopButton.disabled = false;
 
-  playBackgroundSound(); // Start background sound
+  manageBackgroundSound(true); // Start background sound
   runPhase();
 }
 
@@ -191,7 +186,7 @@ function runPhase() {
 // Function to stop the breathing timer
 function stopBreathing() {
   resetBreathingState();
-  stopBackgroundSounds(); // Stop background sound
+  manageBackgroundSound(false); // Stop background sound
 }
 
 // Function to update the instruction text dynamically
@@ -207,16 +202,21 @@ function syncCircleAnimation(phase, duration) {
     return;
   }
 
-  // Adjust animation for phases
-  const isExhalePhase =
-    (phaseDurations.length === 2 && phase === 1) ||
-    (phaseDurations.length > 2 && phase === 2);
-  circle.style.transition = `transform ${duration / 1000}s ease-in-out`;
+  // Determine the current phase label
+  const labels = appConfig.phaseLabels[phaseDurations.length];
+  const phaseLabel = labels[phase];
 
-  if (phase === 0) {
-    circle.style.transform = "scale(1.5)"; // Expand on Inhale
-  } else if (isExhalePhase) {
-    circle.style.transform = "scale(1)"; // Contract on Exhale
+  // Map phase labels to scale values
+  const phaseToScale = {
+    "Inhale...": 1.5, // Expand on inhale
+    "Exhale...": 1, // Contract on exhale
+    "Hold...": circle.style.transform, // Maintain size on hold
+  };
+
+  // Set the transition and scale dynamically
+  circle.style.transition = `transform ${duration / 1000}s ease-in-out`;
+  if (phaseLabel in phaseToScale) {
+    circle.style.transform = `scale(${phaseToScale[phaseLabel]})`;
   }
 }
 
@@ -229,6 +229,13 @@ function resetCircleAnimation() {
 // Attach event listeners to Start and Stop buttons
 startButton.addEventListener("click", startBreathing);
 stopButton.addEventListener("click", stopBreathing);
+
+// Handle dropdown change for background sound
+backgroundSoundDropdown.addEventListener("change", () => {
+  if (isBreathing) {
+    manageBackgroundSound(true); // Play the new sound if session is active
+  }
+});
 
 // Disable Stop button initially
 stopButton.disabled = true;

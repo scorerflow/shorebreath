@@ -2,67 +2,50 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background-color: #f0f8ff;
+  background-color: #f0f8ff; /* Fallback color */
+  background-image: url("./images/xmas.PNG"); /* Background image */
+  background-size: cover; /* Ensure the image covers the entire screen */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent tiling */
   margin: 0;
   padding: 0;
   height: 100vh;
+  position: relative;
+}
+
+/* App Container with Overlay */
+#app-container {
+  position: relative; /* Required for positioning the overlay */
+  z-index: 2;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto; /* Fit to content */
+  margin: auto; /* Center the container */
+  padding: 20px; /* Add padding for spacing */
+  max-width: 500px; /* Limit width for larger screens */
+  border-radius: 15px; /* Optional rounded edges */
+  background: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Optional shadow for effect */
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-#instruction {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-/* Breathing Circle */
+/* Christmas Bauble Design */
 #circle {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: #82caff;
+  background: radial-gradient(
+    circle,
+    #ff4d4d,
+    #a60000
+  ); /* Red bauble gradient */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
   transform: scale(1); /* Default contracted state */
-  transition: none; /* Disable transitions by default */
+  transition: transform 1s ease-in-out; /* Smooth transition */
 }
 
-/* Preset Techniques Dropdown */
-#preset-techniques {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-#preset-techniques label {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-#preset-techniques select {
-  padding: 5px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f8f9fa;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.2s ease;
-}
-
-#preset-techniques select:hover {
-  background-color: #e9ecef;
-}
-
-/* Start/Stop Buttons */
+/* Buttons and Controls */
 #controls {
   margin-top: 20px;
 }
@@ -92,10 +75,47 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Audio Toggle */
+/* Audio Controls */
 #audio-controls {
   margin-top: 10px;
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#audio-controls label,
+#audio-controls input,
+#audio-controls select {
+  margin-bottom: 5px;
+}
+
+/* Preset Breathing Techniques */
+#preset-techniques {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#preset-techniques label {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+#preset-techniques select {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+#preset-techniques select:hover {
+  background-color: #e9ecef;
 }
 
 /* Responsive Design */
@@ -118,7 +138,31 @@ button:disabled {
     padding: 8px 15px;
   }
 
-  #preset-techniques select {
+  select {
     font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  #instruction {
+    font-size: 1.8rem;
+  }
+
+  #circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  button {
+    font-size: 18px;
+    padding: 12px 25px;
+  }
+
+  select {
+    font-size: 18px;
   }
 }

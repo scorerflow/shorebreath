@@ -1,33 +1,57 @@
-/* General Styling */
+/* General Styling with Overlay */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
   background-color: #f0f8ff; /* Fallback color */
-  background-image: url("./images/xmas.PNG"); /* Background image */
   background-size: cover; /* Ensure the image covers the entire screen */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent tiling */
   margin: 0;
   padding: 0;
   height: 100vh;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative; /* Required for pseudo-element positioning */
+  transition: background-image 1s ease-in-out; /* Smooth background transition */
 }
 
-/* App Container with Overlay */
-#app-container {
-  position: relative; /* Required for positioning the overlay */
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: auto; /* Fit to content */
-  margin: auto; /* Center the container */
-  padding: 20px; /* Add padding for spacing */
-  max-width: 500px; /* Limit width for larger screens */
-  border-radius: 15px; /* Optional rounded edges */
+/* Overlay for Contrast */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Optional shadow for effect */
+  z-index: -1; /* Ensure it stays behind all content */
+}
+
+/* App Container */
+#app-container {
+  width: 90%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  position: relative;
+  z-index: 10; /* Above overlay */
+}
+
+/* Heading and Instructions */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+#instruction {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #555;
 }
 
 /* Christmas Bauble Design */
@@ -43,9 +67,64 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
   transform: scale(1); /* Default contracted state */
   transition: transform 1s ease-in-out; /* Smooth transition */
+  position: relative; /* Required for pseudo-elements */
 }
 
-/* Buttons and Controls */
+/* Bauble String */
+#circle::before {
+  content: "";
+  position: absolute;
+  top: -20px; /* Position above the bauble */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px; /* Width of the rectangular hanger */
+  height: 20px; /* Height of the hanger */
+  background-color: #a6a6a6; /* Silver hanger color */
+  border-radius: 2px;
+}
+
+/* Decorative Hook */
+#circle::after {
+  content: "";
+  position: absolute;
+  top: -30px; /* Position above the hanger */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px; /* Thin hook width */
+  height: 15px; /* Length of the hook */
+  background-color: #a6a6a6; /* Silver hook color */
+}
+
+/* Preset Techniques Dropdown */
+#preset-techniques {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#preset-techniques label {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+#preset-techniques select {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+#preset-techniques select:hover {
+  background-color: #e9ecef;
+}
+
+/* Start/Stop Buttons */
 #controls {
   margin-top: 20px;
 }
@@ -79,43 +158,6 @@ button:disabled {
 #audio-controls {
   margin-top: 10px;
   font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#audio-controls label,
-#audio-controls input,
-#audio-controls select {
-  margin-bottom: 5px;
-}
-
-/* Preset Breathing Techniques */
-#preset-techniques {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#preset-techniques label {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-#preset-techniques select {
-  padding: 5px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f8f9fa;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.2s ease;
-}
-
-#preset-techniques select:hover {
-  background-color: #e9ecef;
 }
 
 /* Responsive Design */
@@ -138,7 +180,7 @@ button:disabled {
     padding: 8px 15px;
   }
 
-  select {
+  #preset-techniques select {
     font-size: 14px;
   }
 }
@@ -162,7 +204,7 @@ button:disabled {
     padding: 12px 25px;
   }
 
-  select {
+  #preset-techniques select {
     font-size: 18px;
   }
 }

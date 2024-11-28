@@ -263,54 +263,79 @@ function initializeVolumeSliders() {
   });
 }
 
+// Helper to apply volume changes
+function applyVolumeChange(slider, audioGroup) {
+  const volume = parseFloat(slider.value);
+  Object.values(audioGroup).forEach((sound) => {
+    sound.volume = volume;
+  });
+  console.log(`Volume updated: ${volume}`);
+}
+
+// Initialize audio elements with default volume and preload them
+function initializeAudioElements(audioGroup) {
+  Object.values(audioGroup).forEach((sound) => {
+    sound.muted = false;
+    sound.volume = 0.5; // Default volume
+    sound
+      .play()
+      .then(() => sound.pause())
+      .catch(() => {
+        console.warn(`Autoplay restriction prevented preload of ${sound.src}`);
+      });
+  });
+}
+
+// Bind audio to user interaction to satisfy autoplay restrictions
+document.body.addEventListener(
+  "touchstart",
+  () => {
+    Object.values(cueSounds).forEach((sound) => {
+      sound.muted = false;
+      sound
+        .play()
+        .then(() => sound.pause())
+        .catch((err) => console.warn(err));
+    });
+    Object.values(backgroundSounds).forEach((sound) => {
+      sound.muted = false;
+      sound
+        .play()
+        .then(() => sound.pause())
+        .catch((err) => console.warn(err));
+    });
+  },
+  { once: true }
+);
+
+// Set up volume sliders
 function setupVolumeControls() {
-  // Add event listeners for input events
+  cueVolumeSlider.addEventListener("input", () =>
+    applyVolumeChange(cueVolumeSlider, cueSounds)
+  );
+  cueVolumeSlider.addEventListener("change", () =>
+    applyVolumeChange(cueVolumeSlider, cueSounds)
+  );
+
+  backgroundVolumeSlider.addEventListener("input", () =>
+    applyVolumeChange(backgroundVolumeSlider, backgroundSounds)
+  );
+  backgroundVolumeSlider.addEventListener("change", () =>
+    applyVolumeChange(backgroundVolumeSlider, backgroundSounds)
+  );
+
+  // Debugging logs for slider events
   cueVolumeSlider.addEventListener("input", () => {
-    const volume = parseFloat(cueVolumeSlider.value);
-    console.log("Cue volume slider value:", volume);
-    Object.values(cueSounds).forEach((sound) => {
-      sound.muted = false; // Ensure sound is not muted
-      sound.volume = volume;
-    });
+    console.log(
+      "Cue volume slider input event triggered:",
+      cueVolumeSlider.value
+    );
   });
-
   backgroundVolumeSlider.addEventListener("input", () => {
-    const volume = parseFloat(backgroundVolumeSlider.value);
-    console.log("Background volume slider value:", volume);
-    Object.values(backgroundSounds).forEach((sound) => {
-      sound.muted = false; // Ensure sound is not muted
-      sound.volume = volume;
-    });
-  });
-
-  // Add fallback for 'change' event
-  cueVolumeSlider.addEventListener("change", () => {
-    const volume = parseFloat(cueVolumeSlider.value);
-    Object.values(cueSounds).forEach((sound) => {
-      sound.volume = volume;
-    });
-  });
-
-  backgroundVolumeSlider.addEventListener("change", () => {
-    const volume = parseFloat(backgroundVolumeSlider.value);
-    Object.values(backgroundSounds).forEach((sound) => {
-      sound.volume = volume;
-    });
-  });
-
-  // Add mobile-specific touchend fallback
-  cueVolumeSlider.addEventListener("touchend", () => {
-    const volume = parseFloat(cueVolumeSlider.value);
-    Object.values(cueSounds).forEach((sound) => {
-      sound.volume = volume;
-    });
-  });
-
-  backgroundVolumeSlider.addEventListener("touchend", () => {
-    const volume = parseFloat(backgroundVolumeSlider.value);
-    Object.values(backgroundSounds).forEach((sound) => {
-      sound.volume = volume;
-    });
+    console.log(
+      "Background volume slider input event triggered:",
+      backgroundVolumeSlider.value
+    );
   });
 }
 
@@ -341,4 +366,6 @@ setDefaultBackgroundImage();
 pauseAllSounds();
 initializeVolumeSliders();
 setupVolumeControls();
+initializeAudioElements(cueSounds);
+initializeAudioElements(backgroundSounds);
 initializeCueMuteState();

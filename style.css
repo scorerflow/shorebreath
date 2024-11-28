@@ -255,6 +255,11 @@ input[type="range"]::-webkit-slider-thumb {
   input[type="range"] {
     width: 90%;
   }
+
+  #technique {
+    width: auto; /* Shrink the dropdown to fit its content */
+    padding: 0.5em; /* Adjust padding for touch-friendliness */
+  }
 }
 
 @media (max-width: 400px) {

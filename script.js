@@ -109,7 +109,6 @@ function resetCircleAnimation() {
   circle.style.transform = "scale(1)";
 }
 
-// Reset breathing state
 function resetBreathingState() {
   clearTimeout(activeTimer);
   isBreathing = false;
@@ -118,7 +117,10 @@ function resetBreathingState() {
     sound.pause();
     sound.currentTime = 0;
   });
-  instruction.textContent = "Press Start to begin.";
+  const instruction = document.getElementById("instruction");
+  if (instruction) {
+    instruction.style.display = "block"; // Make the instruction visible again
+  }
   resetCircleAnimation();
   startButton.disabled = false;
   stopButton.disabled = true;
@@ -172,13 +174,20 @@ function playCueSound(phase) {
   }
 }
 
-// Start breathing session
+// Function to start the breathing timer
 function startBreathing() {
-  resetBreathingState();
+  resetBreathingState(); // Reset any lingering states before starting
   isBreathing = true;
   startButton.disabled = true;
   stopButton.disabled = false;
-  manageBackgroundSound(true);
+
+  // Hide the instruction text
+  const instruction = document.getElementById("instruction");
+  if (instruction) {
+    instruction.style.display = "none";
+  }
+
+  manageBackgroundSound(true); // Start background sound
   runPhase();
 }
 

@@ -5,56 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Breathing App</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&family=Quicksand:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <!-- App Container -->
     <div id="app-container">
-      <h1>Take a Breath this Christmas</h1>
+      <h1>Take a Breath at Xmas</h1>
       <p id="instruction">Press Start to begin.</p>
 
-      <!-- Breathing Bubble -->
-      <div id="circle"></div>
+      <!-- Breathing Bauble -->
+      <div id="circle">
+        <span id="circle-text">Inhale</span>
+      </div>
 
-      <!-- Controls Section -->
+      <!-- Start and Stop Buttons -->
       <div id="controls">
         <button id="start">Start</button>
         <button id="stop" disabled>Stop</button>
       </div>
 
-      <!-- Audio Controls -->
-      <div id="audio-controls">
-        <label for="background-sound">Background Sound:</label>
-        <select id="background-sound">
-          <option value="none">None</option>
-          <option value="rain">Rain</option>
-          <option value="river">River</option>
-          <option value="fire">Fire</option>
-        </select>
-        <label for="background-volume">Volume:</label>
-        <input
-          type="range"
-          id="background-volume"
-          min="0"
-          max="1"
-          step="0.1"
-          value="0.5"
-        />
-        <label for="cue-toggle">Cue Sounds:</label>
-        <input type="checkbox" id="cue-toggle" checked />
-        <label for="cue-volume">Cue Volume:</label>
-        <input
-          type="range"
-          id="cue-volume"
-          min="0"
-          max="1"
-          step="0.1"
-          value="0.5"
-        />
-      </div>
-
-      <!-- Preset Breathing Techniques -->
-      <div id="preset-techniques">
-        <label for="technique">Breathing Technique:</label>
+      <!-- Breathing Choice Dropdown -->
+      <div id="breathing-technique">
+        <label for="technique">Choose a Breathing Technique</label>
         <select id="technique">
           <option value="box">Box Breathing</option>
           <option value="478">4-7-8 Breathing</option>
@@ -62,9 +36,44 @@
           <option value="2to1">2:1 Ratio Breathing</option>
         </select>
       </div>
-    </div>
 
+      <!-- Audio Controls -->
+      <div id="audio-controls">
+        <!-- Background Sound Group -->
+        <div class="background-group">
+          <div class="control-row">
+            <label for="background-sound">Background Sound</label>
+            <select id="background-sound">
+              <option value="rain">Rain</option>
+              <option value="river">River</option>
+              <option value="fire">Fire</option>
+            </select>
+          </div>
+          <div class="control-row">
+            <label for="background-volume">Volume</label>
+            <input
+              type="range"
+              id="background-volume"
+              min="0"
+              max="1"
+              step="0.01"
+            />
+          </div>
+        </div>
+
+        <!-- Cue Sound Group -->
+        <div class="cue-group">
+          <div class="control-row">
+            <label for="cue-toggle">Cue Sounds</label>
+            <input type="checkbox" id="cue-toggle" checked />
+          </div>
+          <div class="control-row">
+            <label for="cue-volume">Volume</label>
+            <input type="range" id="cue-volume" min="0" max="1" step="0.01" />
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="script.js"></script>
-    <script src="tests.js"></script>
   </body>
 </html>

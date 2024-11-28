@@ -1,11 +1,8 @@
-/* General Styling with Overlay */
 body {
-  font-family: "Lato", sans-serif;
-  text-align: center;
-  background-color: #f0f8ff; /* Fallback color */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  font-family: "Quicksand", sans-serif; /* Clean and modern font */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #464748; /* Light text color for readability */
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -13,11 +10,9 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: relative;
-  color: #444; /* Gentle gray */
+  position: relative; /* Required for overlay positioning */
 }
 
-/* Overlay for Contrast */
 body::before {
   content: "";
   position: absolute;
@@ -29,7 +24,6 @@ body::before {
   z-index: -1;
 }
 
-/* App Container */
 #app-container {
   display: flex;
   flex-direction: column;
@@ -41,71 +35,47 @@ body::before {
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Depth for container */
 }
 
-/* Heading and Instructions */
 h1 {
-  font-size: 2.5rem;
-  color: #333;
+  font-family: "Mountains of Christmas", cursive; /* Replace with chosen font */
+  font-size: 3rem; /* Adjust size as needed */
+  color: #012e19; /* Keep it readable */
+  text-shadow: 2px 2px 4px rgb(165, 159, 159); /* Optional subtle shadow */
 }
 
 #instruction {
-  font-size: 1.5rem;
-  margin-bottom: 50px; /* Extra space to accommodate the bauble's growth */
-  color: #666; /* Subtle gray for instructions */
+  display: none; /* Hide the instruction element */
 }
 
-/* Button Styling */
-button {
-  padding: 12px 24px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px; /* Rounded corners */
-  background-color: #5a9; /* Soft green */
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #78b; /* Slightly brighter tone for hover */
-  transform: translateY(-2px); /* Slight lift effect */
-}
-
-button:active {
-  background-color: #467; /* Darker tone for active state */
-  transform: translateY(1px); /* Slight depression effect */
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* Adjust spacing for buttons and controls */
-#controls {
-  margin-top: 20px;
-  display: flex;
-  gap: 12px;
-}
-
-/* Christmas Bauble Design */
+/* Christmas Bauble */
 #circle {
-  width: 140px; /* Increased size */
-  height: 140px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: radial-gradient(
     circle,
     #ff4d4d,
     #a60000
   ); /* Red bauble gradient */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
   transform: scale(1); /* Default contracted state */
-  transition: transform 1s ease-in-out; /* Smooth transition for breathing */
-  position: relative;
+  transition: transform 1s ease-in-out; /* Smooth expansion */
+  position: relative; /* Required for text positioning */
+  display: flex; /* Use flexbox for centering text */
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 40px; /* Ensure enough space below */
 }
 
-/* Add the string above the bauble */
+/* Text inside the Bauble */
+#circle-text {
+  font-size: 1.2rem; /* Adjust text size */
+  font-weight: bold;
+  color: white; /* High contrast for visibility */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for readability */
+  pointer-events: none; /* Prevent interaction with the text */
+}
+
 #circle::before {
   content: "";
   position: absolute;
@@ -118,7 +88,6 @@ button:disabled {
   border-radius: 2px;
 }
 
-/* Add the decorative hook */
 #circle::after {
   content: "";
   position: absolute;
@@ -130,45 +99,109 @@ button:disabled {
   background-color: #a6a6a6; /* Silver hook color */
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  #instruction {
-    font-size: 1.2rem;
-    margin-bottom: 40px; /* Reduced margin for smaller screens */
-  }
-
-  #circle {
-    width: 120px;
-    height: 120px;
-  }
-
-  button {
-    font-size: 14px;
-    padding: 10px 20px;
-  }
+button {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #00a375; /* Start button color */
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-@media (min-width: 1024px) {
-  h1 {
-    font-size: 3rem;
-  }
+#start {
+  background-color: #00a375; /* Start button color */
+}
 
-  #instruction {
-    font-size: 1.8rem;
-    margin-bottom: 60px; /* Increased margin for larger screens */
-  }
+#start:hover {
+  background-color: #00b885; /* Slightly brighter tone on hover */
+}
 
+#start:active {
+  background-color: #008a60; /* Darker tone on active state */
+}
+
+#stop {
+  background-color: #ff4545; /* Stop button color */
+}
+
+#stop:hover {
+  background-color: #ff6868; /* Slightly brighter tone on hover */
+}
+
+#stop:active {
+  background-color: #e03131; /* Darker tone on active state */
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+#controls {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+}
+
+#breathing-technique {
+  margin-top: 20px;
+}
+
+#audio-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.background-group,
+.cue-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.background-group .control-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 200px;
+  height: 8px;
+  background: #005154;
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #cc9a68;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
   #circle {
-    width: 180px;
-    height: 180px;
+    width: 80px;
+    height: 80px;
   }
 
-  button {
-    font-size: 18px;
-    padding: 15px 30px;
+  #circle-text {
+    font-size: 1rem; /* Scale text for smaller screens */
   }
 }

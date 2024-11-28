@@ -28,9 +28,9 @@ const appConfig = {
     "2to1": [4000, 8000],
   },
   phaseLabels: {
-    2: ["Inhale...", "Exhale..."],
-    3: ["Inhale...", "Hold...", "Exhale..."],
-    4: ["Inhale...", "Hold...", "Exhale...", "Hold..."],
+    2: ["Inhale", "Exhale"],
+    3: ["Inhale", "Hold", "Exhale"],
+    4: ["Inhale", "Hold", "Exhale", "Hold"],
   },
 };
 
@@ -47,10 +47,11 @@ let isBreathing = false;
 let currentPhase = 0;
 let phaseDurations = appConfig.techniques[appConfig.defaultTechnique];
 
-// Preload audio files
+// Preload audio files with looping
 const preloadAudio = (audioPaths) => {
   return Object.entries(audioPaths).reduce((acc, [key, path]) => {
     const audio = new Audio(path);
+    audio.loop = true; // Enable looping
     acc[key] = audio;
     return acc;
   }, {});
@@ -132,9 +133,9 @@ function syncCircleAnimation(phase, duration) {
   const labels = appConfig.phaseLabels[phaseDurations.length];
   const phaseLabel = labels[phase];
   const phaseToScale = {
-    "Inhale...": 1.5,
-    "Exhale...": 1,
-    "Hold...": circle.style.transform,
+    Inhale: 1.5,
+    Exhale: 1,
+    Hold: circle.style.transform,
   };
   circle.style.transition = `transform ${duration / 1000}s ease-in-out`;
   if (phaseLabel in phaseToScale) {
@@ -145,7 +146,10 @@ function syncCircleAnimation(phase, duration) {
 // Update breathing instructions dynamically
 function updatePhaseText(phase) {
   const labels = appConfig.phaseLabels[phaseDurations.length];
-  instruction.textContent = labels[phase] || "Exhale...";
+  const phaseText = labels[phase] || "Exhale";
+
+  // Update only the text inside the bauble
+  document.getElementById("circle-text").textContent = phaseText;
 }
 
 // Play cue sound
@@ -153,8 +157,8 @@ function playCueSound(phase) {
   const labels = appConfig.phaseLabels[phaseDurations.length];
   const phaseLabel = labels[phase];
   const phaseToSound = {
-    "Inhale...": cueSounds.inhale,
-    "Exhale...": cueSounds.exhale,
+    Inhale: cueSounds.inhale,
+    Exhale: cueSounds.exhale,
   };
   Object.values(cueSounds).forEach((sound) => {
     sound.pause();
@@ -232,6 +236,15 @@ stopButton.addEventListener("click", stopBreathing);
 // Disable Stop button initially
 stopButton.disabled = true;
 
+// Initialize cue sound mute state based on checkbox
+function initializeCueMuteState() {
+  const isMuted = !cueToggle.checked; // False if the checkbox is checked
+  Object.values(cueSounds).forEach((sound) => {
+    sound.muted = isMuted;
+  });
+}
+
 // Populate dropdowns and set defaults on page load
 populateBackgroundSoundDropdown();
 setDefaultBackgroundImage();
+initializeCueMuteState();

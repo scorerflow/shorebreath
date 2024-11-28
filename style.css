@@ -195,25 +195,24 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
-/* Responsive Adjustments */
+/* Mobile Scaling */
 @media (max-width: 600px) {
-  body {
-    padding: 10px;
+  #app-container {
+    transform: scale(0.8); /* Scale down everything proportionally */
   }
 
   h1 {
-    font-size: 2rem; /* Scale title */
+    font-size: 2.5rem; /* Slightly reduce title size */
   }
 
   #circle {
     width: 80px;
     height: 80px;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 
   #circle-text {
-    font-size: 1rem; /* Scale text for smaller screens */
+    font-size: 1rem;
   }
 
   button {
@@ -223,6 +222,6 @@ input[type="range"]::-webkit-slider-thumb {
 
   select,
   input[type="range"] {
-    width: 90%;
+    width: 90%; /* Adjust width for smaller screens */
   }
 }

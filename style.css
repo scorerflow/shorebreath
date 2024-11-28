@@ -172,7 +172,8 @@ select {
 }
 
 input[type="range"] {
-  -webkit-appearance: none;
+  appearance: none; /* Standardized property */
+  -webkit-appearance: none; /* For WebKit browsers */
   width: 200px;
   height: 8px;
   background: #005154;
@@ -182,7 +183,15 @@ input[type="range"] {
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
+  -webkit-appearance: none; /* Allow custom thumb styling */
+  width: 20px;
+  height: 20px;
+  background: #cc9a68;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
   background: #cc9a68;

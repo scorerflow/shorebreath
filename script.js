@@ -47,11 +47,12 @@ let isBreathing = false;
 let currentPhase = 0;
 let phaseDurations = appConfig.techniques[appConfig.defaultTechnique];
 
-// Preload audio files with looping
+// Preload audio files with looping and default volume
 const preloadAudio = (audioPaths) => {
   return Object.entries(audioPaths).reduce((acc, [key, path]) => {
     const audio = new Audio(path);
     audio.loop = true; // Enable looping
+    audio.volume = 0.5; // Default volume
     acc[key] = audio;
     return acc;
   }, {});
@@ -61,21 +62,26 @@ const preloadAudio = (audioPaths) => {
 const cueSounds = preloadAudio(appConfig.audioFiles);
 const backgroundSounds = preloadAudio(appConfig.backgroundSounds);
 
-// Handle page visibility changes
+// Pause all sounds helper function
+function pauseAllSounds() {
+  Object.values(backgroundSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0; // Reset playback
+  });
+  Object.values(cueSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0; // Reset playback
+  });
+}
+
+// Handle visibility changes for mobile and desktop
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
-    // Pause all background and cue sounds when the app is not visible
-    Object.values(backgroundSounds).forEach((sound) => {
-      sound.pause();
-    });
-    Object.values(cueSounds).forEach((sound) => {
-      sound.pause();
-    });
-  } else {
+    // Explicitly pause and reset all sounds
+    pauseAllSounds();
+  } else if (isBreathing) {
     // Resume background sound if breathing is active
-    if (isBreathing) {
-      manageBackgroundSound(true);
-    }
+    manageBackgroundSound(true);
   }
 });
 
@@ -103,12 +109,22 @@ function setDefaultBackgroundImage() {
 // Manage background sound playback
 function manageBackgroundSound(play = false) {
   const selectedSoundKey = backgroundSoundDropdown.value;
+  console.log("Selected background sound key:", selectedSoundKey); // Debugging
+
+  // Pause and reset all sounds
   Object.values(backgroundSounds).forEach((sound) => {
     sound.pause();
     sound.currentTime = 0;
   });
+
+  // Attempt to play the selected sound
   if (play && selectedSoundKey && backgroundSounds[selectedSoundKey]) {
-    backgroundSounds[selectedSoundKey].play();
+    backgroundSounds[selectedSoundKey]
+      .play()
+      .then(() => console.log(`${selectedSoundKey} sound is playing`))
+      .catch((error) => {
+        console.error(`Failed to play ${selectedSoundKey} sound:`, error);
+      });
   }
 }
 
@@ -131,11 +147,7 @@ function resetBreathingState() {
   clearTimeout(activeTimer);
   isBreathing = false;
   currentPhase = 0;
-  Object.values(cueSounds).forEach((sound) => {
-    sound.pause();
-    sound.currentTime = 0;
-  });
-  const instruction = document.getElementById("instruction");
+  pauseAllSounds();
   if (instruction) {
     instruction.style.display = "block"; // Make the instruction visible again
   }
@@ -167,8 +179,6 @@ function syncCircleAnimation(phase, duration) {
 function updatePhaseText(phase) {
   const labels = appConfig.phaseLabels[phaseDurations.length];
   const phaseText = labels[phase] || "Exhale";
-
-  // Update only the text inside the bauble
   document.getElementById("circle-text").textContent = phaseText;
 }
 
@@ -199,8 +209,7 @@ function startBreathing() {
   startButton.disabled = true;
   stopButton.disabled = false;
 
-  // Hide the instruction text if it exists
-  const instruction = document.getElementById("instruction");
+  // Hide the instruction text
   if (instruction) {
     instruction.style.display = "none";
   }
@@ -263,15 +272,7 @@ stopButton.addEventListener("click", stopBreathing);
 // Disable Stop button initially
 stopButton.disabled = true;
 
-// Initialize cue sound mute state based on checkbox
-function initializeCueMuteState() {
-  const isMuted = !cueToggle.checked; // False if the checkbox is checked
-  Object.values(cueSounds).forEach((sound) => {
-    sound.muted = isMuted;
-  });
-}
-
-// Populate dropdowns and set defaults on page load
+// Initialize settings on page load
 populateBackgroundSoundDropdown();
 setDefaultBackgroundImage();
-initializeCueMuteState();
+pauseAllSounds();

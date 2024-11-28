@@ -181,7 +181,7 @@ function startBreathing() {
   startButton.disabled = true;
   stopButton.disabled = false;
 
-  // Hide the instruction text
+  // Hide the instruction text if it exists
   const instruction = document.getElementById("instruction");
   if (instruction) {
     instruction.style.display = "none";

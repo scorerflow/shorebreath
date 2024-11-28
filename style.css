@@ -43,14 +43,19 @@ body::before {
 h1 {
   font-family: "Mountains of Christmas", cursive; /* Festive font */
   font-size: 3rem; /* Adjust size as needed */
-  color: #012e19; /* Keep it readable */
+  color: #012e19; /* Dark green */
   text-shadow: 2px 2px 4px rgb(165, 159, 159); /* Optional subtle shadow */
   text-align: center; /* Explicitly center-align text */
-  margin: 10 auto; /* Ensure it centers in the parent container */
+  margin: 10 auto; /* Ensure centering in parent */
+  width: 100%; /* Take full width for alignment */
 }
 
 #instruction {
-  display: none; /* Hide the instruction element */
+  display: block; /* Make it visible by default */
+  font-size: 1rem;
+  margin: 10px 0;
+  color: #464748; /* Text color */
+  text-align: center;
 }
 
 /* Christmas Bauble */
@@ -91,7 +96,7 @@ h1 {
   transform: translateX(-50%);
   width: 10px;
   height: 20px;
-  background-color: #a6a6a6; /* Silver hanger color */
+  background-color: #cc9a68; /* Updated color for hook */
   border-radius: 2px;
 }
 
@@ -103,7 +108,7 @@ h1 {
   transform: translateX(-50%);
   width: 2px;
   height: 15px;
-  background-color: #a6a6a6; /* Silver hook color */
+  background-color: #cc9a68; /* Updated color for string */
 }
 
 button {
@@ -158,6 +163,9 @@ button:disabled {
 
 #breathing-technique {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #audio-controls {
@@ -176,7 +184,8 @@ button:disabled {
   gap: 10px;
 }
 
-.background-group .control-row {
+.background-group .control-row,
+.cue-group .control-row {
   display: flex;
   gap: 10px;
   justify-content: center;
@@ -201,66 +210,85 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
+/* Dropdown adjustments */
 select {
   width: auto;
-  max-width: 100%;
-  padding: 0.5em; /* Ensure dropdown is touch-friendly */
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  text-align: center;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 600px) {
   body {
-    background-size: cover; /* Ensure the background still fills the screen */
-    background-attachment: fixed; /* Prevents scrolling effect */
+    background-size: cover;
+    background-attachment: fixed;
   }
 
   #app-container {
-    transform: scale(0.9); /* Slightly shrink everything proportionally */
-    padding: 15px; /* Reduce padding to fit smaller screens */
-  }
-
-  #circle {
-    width: 80px; /* Shrink the bauble */
-    height: 80px;
+    transform: scale(0.9);
+    padding: 15px;
   }
 
   h1 {
-    font-size: 2rem; /* Reduce the title size */
-    margin-bottom: 10px; /* Ensure spacing remains consistent */
+    font-size: 2rem;
   }
 
   button {
-    font-size: 0.9rem; /* Adjust button size */
-    padding: 8px 12px; /* Adjust padding */
+    font-size: 0.9rem;
+    padding: 8px 12px;
   }
 
-  #technique,
-  #background-sound {
-    width: 100%; /* Expand dropdowns to fit smaller screens */
+  #circle {
+    width: 80px;
+    height: 80px;
   }
 
+  #circle-text {
+    font-size: 1rem;
+  }
+
+  select,
   input[type="range"] {
-    width: 90%; /* Keep sliders responsive */
+    width: 90%;
+  }
+
+  #breathing-technique,
+  .background-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #breathing-technique label,
+  .background-group label {
+    text-align: center;
   }
 }
 
 @media (max-width: 400px) {
   #app-container {
-    transform: scale(0.8); /* Shrink even more for very small screens */
-    padding: 10px; /* Further reduce padding */
-  }
-
-  #circle {
-    width: 70px; /* Shrink the bauble more */
-    height: 70px;
+    transform: scale(0.8);
+    padding: 10px;
   }
 
   h1 {
-    font-size: 1.8rem; /* Reduce title size further */
+    font-size: 1.8rem;
   }
 
   button {
-    font-size: 0.8rem; /* Adjust button font size */
-    padding: 6px 10px; /* Adjust padding */
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+
+  #circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  #circle-text {
+    font-size: 0.9rem;
   }
 }

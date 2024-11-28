@@ -61,6 +61,24 @@ const preloadAudio = (audioPaths) => {
 const cueSounds = preloadAudio(appConfig.audioFiles);
 const backgroundSounds = preloadAudio(appConfig.backgroundSounds);
 
+// Handle page visibility changes
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    // Pause all background and cue sounds when the app is not visible
+    Object.values(backgroundSounds).forEach((sound) => {
+      sound.pause();
+    });
+    Object.values(cueSounds).forEach((sound) => {
+      sound.pause();
+    });
+  } else {
+    // Resume background sound if breathing is active
+    if (isBreathing) {
+      manageBackgroundSound(true);
+    }
+  }
+});
+
 // Populate background sound dropdown
 function populateBackgroundSoundDropdown() {
   backgroundSoundDropdown.innerHTML = "";

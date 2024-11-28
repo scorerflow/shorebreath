@@ -248,18 +248,72 @@ techniqueDropdown.addEventListener("change", () => {
     appConfig.techniques[selectedTechnique] ||
     appConfig.techniques[appConfig.defaultTechnique];
 });
-cueVolumeSlider.addEventListener("input", () => {
-  const volume = parseFloat(cueVolumeSlider.value);
+function initializeVolumeSliders() {
+  // Set default slider values
+  cueVolumeSlider.value = "0.5"; // Default volume
   Object.values(cueSounds).forEach((sound) => {
-    sound.volume = volume;
+    sound.volume = 0.5;
+    sound.muted = false; // Ensure sound is not muted
   });
-});
-backgroundVolumeSlider.addEventListener("input", () => {
-  const volume = parseFloat(backgroundVolumeSlider.value);
+
+  backgroundVolumeSlider.value = "0.5"; // Default volume
   Object.values(backgroundSounds).forEach((sound) => {
-    sound.volume = volume;
+    sound.volume = 0.5;
+    sound.muted = false; // Ensure sound is not muted
   });
-});
+}
+
+function setupVolumeControls() {
+  // Add event listeners for input events
+  cueVolumeSlider.addEventListener("input", () => {
+    const volume = parseFloat(cueVolumeSlider.value);
+    console.log("Cue volume slider value:", volume);
+    Object.values(cueSounds).forEach((sound) => {
+      sound.muted = false; // Ensure sound is not muted
+      sound.volume = volume;
+    });
+  });
+
+  backgroundVolumeSlider.addEventListener("input", () => {
+    const volume = parseFloat(backgroundVolumeSlider.value);
+    console.log("Background volume slider value:", volume);
+    Object.values(backgroundSounds).forEach((sound) => {
+      sound.muted = false; // Ensure sound is not muted
+      sound.volume = volume;
+    });
+  });
+
+  // Add fallback for 'change' event
+  cueVolumeSlider.addEventListener("change", () => {
+    const volume = parseFloat(cueVolumeSlider.value);
+    Object.values(cueSounds).forEach((sound) => {
+      sound.volume = volume;
+    });
+  });
+
+  backgroundVolumeSlider.addEventListener("change", () => {
+    const volume = parseFloat(backgroundVolumeSlider.value);
+    Object.values(backgroundSounds).forEach((sound) => {
+      sound.volume = volume;
+    });
+  });
+
+  // Add mobile-specific touchend fallback
+  cueVolumeSlider.addEventListener("touchend", () => {
+    const volume = parseFloat(cueVolumeSlider.value);
+    Object.values(cueSounds).forEach((sound) => {
+      sound.volume = volume;
+    });
+  });
+
+  backgroundVolumeSlider.addEventListener("touchend", () => {
+    const volume = parseFloat(backgroundVolumeSlider.value);
+    Object.values(backgroundSounds).forEach((sound) => {
+      sound.volume = volume;
+    });
+  });
+}
+
 cueToggle.addEventListener("change", () => {
   const isMuted = !cueToggle.checked;
   Object.values(cueSounds).forEach((sound) => {
@@ -276,3 +330,5 @@ stopButton.disabled = true;
 populateBackgroundSoundDropdown();
 setDefaultBackgroundImage();
 pauseAllSounds();
+initializeVolumeSliders();
+setupVolumeControls();

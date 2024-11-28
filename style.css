@@ -12,7 +12,7 @@ body {
   align-items: center;
   flex-direction: column;
   position: relative; /* Required for overlay positioning */
-  background-image: url("images/snow.PNG"); /* Replace with your default background image */
+  background-image: url("images/snow.PNG"); /* Default background image */
   background-size: cover; /* Ensure it fills the entire screen */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent tiling */
@@ -38,43 +38,17 @@ body::before {
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.8); /* Slightly transparent white box */
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Depth for container */
-  width: 90%;
-  max-width: 600px;
-  text-align: center; /* Center-align content */
 }
 
 h1 {
-  font-family: "Mountains of Christmas", cursive; /* Replace with chosen font */
+  font-family: "Mountains of Christmas", cursive; /* Festive font */
   font-size: 3rem; /* Adjust size as needed */
   color: #012e19; /* Keep it readable */
   text-shadow: 2px 2px 4px rgb(165, 159, 159); /* Optional subtle shadow */
 }
 
-/* Dropdown Section */
-.dropdown-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px; /* Space between text and dropdown */
-  margin-bottom: 20px; /* Add spacing between dropdowns */
-}
-
-.dropdown-group label {
-  font-size: 1rem;
-  color: #464748;
-  font-weight: bold;
-}
-
-.dropdown-group select {
-  font-family: "Quicksand", sans-serif;
-  font-size: 1rem;
-  padding: 10px 15px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  transition: all 0.3s ease;
-  text-align: center;
-  width: 200px; /* Set consistent dropdown width */
+#instruction {
+  display: none; /* Hide the instruction element */
 }
 
 /* Christmas Bauble */
@@ -180,6 +154,10 @@ button:disabled {
   gap: 12px;
 }
 
+#breathing-technique {
+  margin-top: 20px;
+}
+
 #audio-controls {
   display: flex;
   flex-direction: column;
@@ -221,64 +199,65 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
-/* Adjustments for Mobile */
+select {
+  width: auto;
+  max-width: 100%;
+  padding: 0.5em; /* Ensure dropdown is touch-friendly */
+}
+
+/* Responsive Adjustments */
 @media (max-width: 600px) {
   body {
-    background-size: cover;
+    background-size: cover; /* Ensure the background still fills the screen */
+    background-attachment: fixed; /* Prevents scrolling effect */
   }
 
   #app-container {
-    transform: scale(0.9);
-    padding: 15px;
-  }
-
-  .dropdown-group {
-    flex-direction: column; /* Stack label above dropdown */
-    align-items: center;
+    transform: scale(0.9); /* Slightly shrink everything proportionally */
+    padding: 15px; /* Reduce padding to fit smaller screens */
   }
 
   #circle {
-    width: 80px;
+    width: 80px; /* Shrink the bauble */
     height: 80px;
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 2rem; /* Reduce the title size */
   }
 
   button {
-    font-size: 0.9rem;
-    padding: 8px 12px;
+    font-size: 0.9rem; /* Adjust button size */
+    padding: 8px 12px; /* Adjust padding */
   }
 
-  select,
+  #technique,
+  #background-sound {
+    width: 100%; /* Expand dropdowns to fit smaller screens */
+  }
+
   input[type="range"] {
-    width: 90%;
-  }
-
-  #technique {
-    width: auto; /* Shrink the dropdown to fit its content */
-    padding: 0.5em; /* Adjust padding for touch-friendliness */
+    width: 90%; /* Keep sliders responsive */
   }
 }
 
 @media (max-width: 400px) {
   #app-container {
-    transform: scale(0.8);
-    padding: 10px;
+    transform: scale(0.8); /* Shrink even more for very small screens */
+    padding: 10px; /* Further reduce padding */
   }
 
   #circle {
-    width: 70px;
+    width: 70px; /* Shrink the bauble more */
     height: 70px;
   }
 
   h1 {
-    font-size: 1.8rem;
+    font-size: 1.8rem; /* Reduce title size further */
   }
 
   button {
-    font-size: 0.8rem;
-    padding: 6px 10px;
+    font-size: 0.8rem; /* Adjust button font size */
+    padding: 6px 10px; /* Adjust padding */
   }
 }

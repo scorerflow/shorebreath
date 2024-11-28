@@ -1,11 +1,11 @@
 /* General Styling with Overlay */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Lato", sans-serif;
   text-align: center;
   background-color: #f0f8ff; /* Fallback color */
-  background-size: cover; /* Ensure the image covers the entire screen */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevent tiling */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -13,8 +13,8 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: relative; /* Required for pseudo-element positioning */
-  transition: background-image 1s ease-in-out; /* Smooth background transition */
+  position: relative;
+  color: #444; /* Gentle gray */
 }
 
 /* Overlay for Contrast */
@@ -26,38 +26,73 @@ body::before {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
-  z-index: -1; /* Ensure it stays behind all content */
+  z-index: -1;
 }
 
 /* App Container */
 #app-container {
-  width: 90%;
-  max-width: 600px;
-  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
-  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-  position: relative;
-  z-index: 10; /* Above overlay */
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8); /* Slightly transparent white box */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Depth for container */
 }
 
 /* Heading and Instructions */
 h1 {
   font-size: 2.5rem;
-  margin-bottom: 20px;
   color: #333;
 }
 
 #instruction {
   font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #555;
+  margin-bottom: 50px; /* Extra space to accommodate the bauble's growth */
+  color: #666; /* Subtle gray for instructions */
+}
+
+/* Button Styling */
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+  background-color: #5a9; /* Soft green */
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #78b; /* Slightly brighter tone for hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+button:active {
+  background-color: #467; /* Darker tone for active state */
+  transform: translateY(1px); /* Slight depression effect */
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Adjust spacing for buttons and controls */
+#controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
 }
 
 /* Christmas Bauble Design */
 #circle {
-  width: 100px;
-  height: 100px;
+  width: 140px; /* Increased size */
+  height: 140px;
   border-radius: 50%;
   background: radial-gradient(
     circle,
@@ -66,98 +101,33 @@ h1 {
   ); /* Red bauble gradient */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
   transform: scale(1); /* Default contracted state */
-  transition: transform 1s ease-in-out; /* Smooth transition */
-  position: relative; /* Required for pseudo-elements */
+  transition: transform 1s ease-in-out; /* Smooth transition for breathing */
+  position: relative;
 }
 
-/* Bauble String */
+/* Add the string above the bauble */
 #circle::before {
   content: "";
   position: absolute;
   top: -20px; /* Position above the bauble */
   left: 50%;
   transform: translateX(-50%);
-  width: 10px; /* Width of the rectangular hanger */
-  height: 20px; /* Height of the hanger */
+  width: 10px;
+  height: 20px;
   background-color: #a6a6a6; /* Silver hanger color */
   border-radius: 2px;
 }
 
-/* Decorative Hook */
+/* Add the decorative hook */
 #circle::after {
   content: "";
   position: absolute;
-  top: -30px; /* Position above the hanger */
+  top: -30px;
   left: 50%;
   transform: translateX(-50%);
-  width: 2px; /* Thin hook width */
-  height: 15px; /* Length of the hook */
+  width: 2px;
+  height: 15px;
   background-color: #a6a6a6; /* Silver hook color */
-}
-
-/* Preset Techniques Dropdown */
-#preset-techniques {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-#preset-techniques label {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-#preset-techniques select {
-  padding: 5px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f8f9fa;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.2s ease;
-}
-
-#preset-techniques select:hover {
-  background-color: #e9ecef;
-}
-
-/* Start/Stop Buttons */
-#controls {
-  margin-top: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: 5px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:active {
-  background-color: #003f7f;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Audio Controls */
-#audio-controls {
-  margin-top: 10px;
-  font-size: 14px;
 }
 
 /* Responsive Design */
@@ -168,20 +138,17 @@ button:disabled {
 
   #instruction {
     font-size: 1.2rem;
+    margin-bottom: 40px; /* Reduced margin for smaller screens */
   }
 
   #circle {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
   }
 
   button {
     font-size: 14px;
-    padding: 8px 15px;
-  }
-
-  #preset-techniques select {
-    font-size: 14px;
+    padding: 10px 20px;
   }
 }
 
@@ -192,19 +159,16 @@ button:disabled {
 
   #instruction {
     font-size: 1.8rem;
+    margin-bottom: 60px; /* Increased margin for larger screens */
   }
 
   #circle {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
   }
 
   button {
     font-size: 18px;
-    padding: 12px 25px;
-  }
-
-  #preset-techniques select {
-    font-size: 18px;
+    padding: 15px 30px;
   }
 }

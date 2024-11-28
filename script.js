@@ -61,14 +61,11 @@ const cueSounds = preloadAudio(appConfig.audioFiles);
 const backgroundSounds = preloadAudio(appConfig.backgroundSounds);
 
 // General helper to update settings for an audio group
-function updateSoundSettings(slider, audioGroup, key = null) {
+function updateSoundSettings(slider, audioGroup) {
   const volume = parseFloat(slider.value);
-  Object.entries(audioGroup).forEach(([soundKey, sound]) => {
-    if (!key || soundKey === key) {
-      sound.volume = volume;
-    }
+  Object.values(audioGroup).forEach((sound) => {
+    sound.volume = volume;
   });
-  console.log(`Updated ${key || "all"} sounds to volume: ${volume}`);
 }
 
 // Reset circle animation
@@ -82,7 +79,7 @@ function resetBreathingState() {
   clearTimeout(activeTimer); // Clear active timer
   isBreathing = false;
   toggleButton.textContent = "Start"; // Update button text
-  toggleButton.classList.remove("active"); // Remove active state for green color
+  toggleButton.classList.remove("active"); // Remove active state
   pauseAllSounds(); // Stop any sounds playing
   resetCircleAnimation(); // Reset circle to default state
   if (instruction) instruction.style.display = "block"; // Show instruction text again
@@ -125,7 +122,7 @@ function startBreathing() {
   resetBreathingState(); // Ensure no lingering states
   isBreathing = true;
   toggleButton.textContent = "Stop"; // Update button text
-  toggleButton.classList.add("active"); // Add active state for red color
+  toggleButton.classList.add("active"); // Add active state
   if (instruction) instruction.style.display = "none"; // Hide instruction text
   manageBackgroundSound(true);
   runPhase();
@@ -156,9 +153,7 @@ function playCueSound(phase) {
     sound.currentTime = 0;
   });
   if (phaseToSound[phaseLabel]) {
-    phaseToSound[phaseLabel]
-      .play()
-      .catch((err) => console.warn(`Cue sound error: ${err}`));
+    phaseToSound[phaseLabel].play().catch(() => {});
   }
 }
 
@@ -170,7 +165,7 @@ function manageBackgroundSound(play = false) {
     sound.currentTime = 0;
   });
   if (play && backgroundSounds[selectedSoundKey]) {
-    backgroundSounds[selectedSoundKey].play().catch((err) => console.warn(err));
+    backgroundSounds[selectedSoundKey].play().catch(() => {});
   }
 }
 
@@ -220,10 +215,9 @@ function setupEventListeners() {
   cueToggle.addEventListener("change", () => {
     const isMuted = !cueToggle.checked;
     Object.values(cueSounds).forEach((sound) => (sound.muted = isMuted));
-    console.log("Cue sounds muted:", isMuted);
   });
 
-  toggleButton.addEventListener("click", toggleBreathing); // Add toggle button listener
+  toggleButton.addEventListener("click", toggleBreathing);
 }
 
 // Initialize the app

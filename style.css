@@ -12,6 +12,10 @@ body {
   align-items: center;
   flex-direction: column;
   position: relative; /* Required for overlay positioning */
+  background-image: url("images/snow.PNG"); /* Replace with your default background image */
+  background-size: cover; /* Ensure it fills the entire screen */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent tiling */
 }
 
 body::before {
@@ -34,6 +38,9 @@ body::before {
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.8); /* Slightly transparent white box */
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Depth for container */
+  width: 90%;
+  max-width: 600px;
+  text-align: center; /* Center-align content */
 }
 
 h1 {
@@ -43,8 +50,31 @@ h1 {
   text-shadow: 2px 2px 4px rgb(165, 159, 159); /* Optional subtle shadow */
 }
 
-#instruction {
-  display: none; /* Hide the instruction element */
+/* Dropdown Section */
+.dropdown-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* Space between text and dropdown */
+  margin-bottom: 20px; /* Add spacing between dropdowns */
+}
+
+.dropdown-group label {
+  font-size: 1rem;
+  color: #464748;
+  font-weight: bold;
+}
+
+.dropdown-group select {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1rem;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 200px; /* Set consistent dropdown width */
 }
 
 /* Christmas Bauble */
@@ -150,10 +180,6 @@ button:disabled {
   gap: 12px;
 }
 
-#breathing-technique {
-  margin-top: 20px;
-}
-
 #audio-controls {
   display: flex;
   flex-direction: column;
@@ -195,49 +221,59 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
+/* Adjustments for Mobile */
 @media (max-width: 600px) {
+  body {
+    background-size: cover;
+  }
+
   #app-container {
-    transform: scale(0.9); /* Slightly shrink everything proportionally */
-    padding: 15px; /* Reduce padding to fit smaller screens */
+    transform: scale(0.9);
+    padding: 15px;
+  }
+
+  .dropdown-group {
+    flex-direction: column; /* Stack label above dropdown */
+    align-items: center;
   }
 
   #circle {
-    width: 80px; /* Shrink the bauble */
+    width: 80px;
     height: 80px;
   }
 
   h1 {
-    font-size: 2rem; /* Reduce the title size */
+    font-size: 2rem;
   }
 
   button {
-    font-size: 0.9rem; /* Adjust button size */
-    padding: 8px 12px; /* Adjust padding */
+    font-size: 0.9rem;
+    padding: 8px 12px;
   }
 
   select,
   input[type="range"] {
-    width: 90%; /* Keep inputs responsive */
+    width: 90%;
   }
 }
 
 @media (max-width: 400px) {
   #app-container {
-    transform: scale(0.8); /* Shrink even more for very small screens */
-    padding: 10px; /* Further reduce padding */
+    transform: scale(0.8);
+    padding: 10px;
   }
 
   #circle {
-    width: 70px; /* Shrink the bauble more */
+    width: 70px;
     height: 70px;
   }
 
   h1 {
-    font-size: 1.8rem; /* Reduce title size further */
+    font-size: 1.8rem;
   }
 
   button {
-    font-size: 0.8rem; /* Adjust button font size */
-    padding: 6px 10px; /* Adjust padding */
+    font-size: 0.8rem;
+    padding: 6px 10px;
   }
 }

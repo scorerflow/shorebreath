@@ -1,3 +1,4 @@
+/* General Styling */
 body {
   font-family: "Quicksand", sans-serif; /* Clean and modern font */
   font-size: 1rem;
@@ -196,12 +197,32 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Responsive Adjustments */
 @media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2rem; /* Scale title */
+  }
+
   #circle {
     width: 80px;
     height: 80px;
+    margin-top: 30px;
+    margin-bottom: 20px;
   }
 
   #circle-text {
     font-size: 1rem; /* Scale text for smaller screens */
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+
+  select,
+  input[type="range"] {
+    width: 90%;
   }
 }

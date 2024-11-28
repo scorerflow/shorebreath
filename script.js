@@ -314,6 +314,15 @@ function setupVolumeControls() {
   });
 }
 
+// Initialize the cue sounds' mute state based on the checkbox
+function initializeCueMuteState() {
+  const isMuted = !cueToggle.checked; // False if the checkbox is checked
+  Object.values(cueSounds).forEach((sound) => {
+    sound.muted = isMuted;
+  });
+  console.log("Cue sounds initialized as muted:", isMuted);
+}
+
 cueToggle.addEventListener("change", () => {
   const isMuted = !cueToggle.checked;
   Object.values(cueSounds).forEach((sound) => {
@@ -332,3 +341,4 @@ setDefaultBackgroundImage();
 pauseAllSounds();
 initializeVolumeSliders();
 setupVolumeControls();
+initializeCueMuteState();

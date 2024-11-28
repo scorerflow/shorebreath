@@ -101,48 +101,29 @@ h1 {
   pointer-events: none;
 }
 
-/* Buttons */
-button {
+#toggle-button {
   font-family: "Quicksand", sans-serif;
   font-weight: 600;
   font-size: 1rem;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  margin-bottom: 20px;
+  background-color: #00a375; /* Default start color */
   color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-#start {
-  background-color: #00a375;
+#toggle-button.active {
+  background-color: #ff4545; /* Color for stop state */
 }
 
-#start:hover {
-  background-color: #00b885;
+#toggle-button:hover {
+  background-color: #00b885; /* Slightly brighter for hover */
 }
 
-#start:active {
-  background-color: #008a60;
-}
-
-#stop {
-  background-color: #ff4545;
-}
-
-#stop:hover {
-  background-color: #ff6868;
-}
-
-#stop:active {
-  background-color: #e03131;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  box-shadow: none;
+#toggle-button.active:hover {
+  background-color: #ff6868; /* Brighter stop hover */
 }
 
 #controls {

@@ -1,8 +1,7 @@
 // Get references to DOM elements
 const instruction = document.getElementById("instruction");
 const circle = document.getElementById("circle");
-const startButton = document.getElementById("start");
-const stopButton = document.getElementById("stop");
+const toggleButton = document.getElementById("toggle-button");
 const techniqueDropdown = document.getElementById("technique");
 const cueToggle = document.getElementById("cue-toggle");
 const cueVolumeSlider = document.getElementById("cue-volume");
@@ -80,14 +79,15 @@ function resetCircleAnimation() {
 
 // Reset breathing state
 function resetBreathingState() {
-  clearTimeout(activeTimer);
+  clearTimeout(activeTimer); // Clear active timer
   isBreathing = false;
-  currentPhase = 0;
-  pauseAllSounds();
-  if (instruction) instruction.style.display = "block";
-  resetCircleAnimation();
-  startButton.disabled = false;
-  stopButton.disabled = true;
+  toggleButton.textContent = "Start"; // Update button text
+  toggleButton.classList.remove("active"); // Remove active state for green color
+  pauseAllSounds(); // Stop any sounds playing
+  resetCircleAnimation(); // Reset circle to default state
+  if (instruction) instruction.style.display = "block"; // Show instruction text again
+  currentPhase = 0; // Reset breathing phase
+  document.getElementById("circle-text").textContent = "Inhale"; // Reset circle text
 }
 
 // Pause all sounds
@@ -122,11 +122,11 @@ function updatePhaseText(phase) {
 
 // Start breathing session
 function startBreathing() {
-  resetBreathingState();
+  resetBreathingState(); // Ensure no lingering states
   isBreathing = true;
-  startButton.disabled = true;
-  stopButton.disabled = false;
-  if (instruction) instruction.style.display = "none";
+  toggleButton.textContent = "Stop"; // Update button text
+  toggleButton.classList.add("active"); // Add active state for red color
+  if (instruction) instruction.style.display = "none"; // Hide instruction text
   manageBackgroundSound(true);
   runPhase();
 }
@@ -174,6 +174,15 @@ function manageBackgroundSound(play = false) {
   }
 }
 
+// Toggle breathing session
+function toggleBreathing() {
+  if (!isBreathing) {
+    startBreathing();
+  } else {
+    resetBreathingState();
+  }
+}
+
 // Populate dropdowns and set defaults
 function populateBackgroundSoundDropdown() {
   backgroundSoundDropdown.innerHTML = "";
@@ -214,11 +223,10 @@ function setupEventListeners() {
     console.log("Cue sounds muted:", isMuted);
   });
 
-  startButton.addEventListener("click", startBreathing);
-  stopButton.addEventListener("click", resetBreathingState);
+  toggleButton.addEventListener("click", toggleBreathing); // Add toggle button listener
 }
 
-// Initialize the app on page load
+// Initialize the app
 function initializeApp() {
   populateBackgroundSoundDropdown();
   document.body.style.backgroundImage = `url(${
@@ -228,7 +236,8 @@ function initializeApp() {
   Object.values(cueSounds).forEach(
     (sound) => (sound.muted = !cueToggle.checked)
   );
-  stopButton.disabled = true;
+  toggleButton.textContent = "Start"; // Initialize button state
+  if (instruction) instruction.style.display = "block"; // Ensure instruction is visible on load
 }
 
 initializeApp();

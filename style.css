@@ -45,6 +45,8 @@ h1 {
   font-size: 3rem; /* Adjust size as needed */
   color: #012e19; /* Keep it readable */
   text-shadow: 2px 2px 4px rgb(165, 159, 159); /* Optional subtle shadow */
+  text-align: center; /* Explicitly center-align text */
+  margin: 10 auto; /* Ensure it centers in the parent container */
 }
 
 #instruction {
@@ -224,6 +226,7 @@ select {
 
   h1 {
     font-size: 2rem; /* Reduce the title size */
+    margin-bottom: 10px; /* Ensure spacing remains consistent */
   }
 
   button {

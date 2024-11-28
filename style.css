@@ -1,9 +1,9 @@
 /* General Styling */
 body {
-  font-family: "Quicksand", sans-serif; /* Clean and modern font */
+  font-family: "Quicksand", sans-serif;
   font-size: 1rem;
   font-weight: bold;
-  color: #464748; /* Light text color for readability */
+  color: #464748;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -11,11 +11,8 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: relative; /* Required for overlay positioning */
-  background-image: url("images/snow.PNG"); /* Default background image */
-  background-size: cover; /* Ensure it fills the entire screen */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevent tiling */
+  position: relative;
+  background: url("images/snow.PNG") center / cover no-repeat;
 }
 
 body::before {
@@ -36,81 +33,75 @@ body::before {
   justify-content: center;
   padding: 20px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.8); /* Slightly transparent white box */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Depth for container */
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Headings and Instructions */
 h1 {
-  font-family: "Mountains of Christmas", cursive; /* Festive font */
-  font-size: 3rem; /* Adjust size as needed */
-  color: #012e19; /* Dark green */
-  text-shadow: 2px 2px 4px rgb(165, 159, 159); /* Optional subtle shadow */
-  text-align: center; /* Explicitly center-align text */
-  margin: 10 auto; /* Ensure centering in parent */
-  width: 100%; /* Take full width for alignment */
+  font-family: "Mountains of Christmas", cursive;
+  font-size: 3rem;
+  color: #012e19;
+  text-shadow: 2px 2px 4px rgb(165, 159, 159);
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 #instruction {
-  display: block; /* Make it visible by default */
   font-size: 1rem;
   margin: 10px 0;
-  color: #464748; /* Text color */
+  color: #464748;
   text-align: center;
 }
 
-/* Christmas Bauble */
+/* Breathing Bauble */
 #circle {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    #ff4d4d,
-    #a60000
-  ); /* Red bauble gradient */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
-  transform: scale(1); /* Default contracted state */
-  transition: transform 1s ease-in-out; /* Smooth expansion */
-  position: relative; /* Required for text positioning */
-  display: flex; /* Use flexbox for centering text */
+  background: radial-gradient(circle, #ff4d4d, #a60000);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: scale(1);
+  transition: transform 1s ease-in-out;
+  position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
-  margin-bottom: 40px; /* Ensure enough space below */
+  margin: 50px 0 40px;
 }
 
-/* Text inside the Bauble */
-#circle-text {
-  font-size: 1.2rem; /* Adjust text size */
-  font-weight: bold;
-  color: white; /* High contrast for visibility */
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for readability */
-  pointer-events: none; /* Prevent interaction with the text */
+#circle::before,
+#circle::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #circle::before {
-  content: "";
-  position: absolute;
-  top: -20px; /* Position above the bauble */
-  left: 50%;
-  transform: translateX(-50%);
   width: 10px;
   height: 20px;
-  background-color: #cc9a68; /* Updated color for hook */
+  background-color: #cc9a68;
   border-radius: 2px;
 }
 
 #circle::after {
-  content: "";
-  position: absolute;
   top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 2px;
   height: 15px;
-  background-color: #cc9a68; /* Updated color for string */
+  background-color: #cc9a68;
 }
 
+#circle-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+/* Buttons */
 button {
   font-family: "Quicksand", sans-serif;
   font-weight: 600;
@@ -119,34 +110,33 @@ button {
   border: none;
   border-radius: 5px;
   margin-bottom: 20px;
-  background-color: #00a375; /* Start button color */
   color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 #start {
-  background-color: #00a375; /* Start button color */
+  background-color: #00a375;
 }
 
 #start:hover {
-  background-color: #00b885; /* Slightly brighter tone on hover */
+  background-color: #00b885;
 }
 
 #start:active {
-  background-color: #008a60; /* Darker tone on active state */
+  background-color: #008a60;
 }
 
 #stop {
-  background-color: #ff4545; /* Stop button color */
+  background-color: #ff4545;
 }
 
 #stop:hover {
-  background-color: #ff6868; /* Slightly brighter tone on hover */
+  background-color: #ff6868;
 }
 
 #stop:active {
-  background-color: #e03131; /* Darker tone on active state */
+  background-color: #e03131;
 }
 
 button:disabled {
@@ -161,35 +151,24 @@ button:disabled {
   gap: 12px;
 }
 
-#breathing-technique {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
+/* Dropdowns and Volume Controls */
+#breathing-technique,
 #audio-controls {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
   gap: 15px;
 }
 
-.background-group,
-.cue-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.background-group .control-row,
-.cue-group .control-row {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
+select {
+  width: auto;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f8f9fa;
+  cursor: pointer;
 }
 
 input[type="range"] {
@@ -198,6 +177,7 @@ input[type="range"] {
   height: 8px;
   background: #005154;
   border-radius: 4px;
+  margin-bottom: 20px;
   outline: none;
 }
 
@@ -210,21 +190,9 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
-/* Dropdown adjustments */
-select {
-  width: auto;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  background-color: #f8f9fa;
-  cursor: pointer;
-  text-align: center;
-}
-
+/* Media Queries */
 @media (max-width: 600px) {
   body {
-    background-size: cover;
     background-attachment: fixed;
   }
 
@@ -254,17 +222,6 @@ select {
   select,
   input[type="range"] {
     width: 90%;
-  }
-
-  #breathing-technique,
-  .background-group {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #breathing-technique label,
-  .background-group label {
-    text-align: center;
   }
 }
 

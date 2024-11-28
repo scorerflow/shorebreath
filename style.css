@@ -195,33 +195,49 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
-/* Mobile Scaling */
 @media (max-width: 600px) {
   #app-container {
-    transform: scale(0.8); /* Scale down everything proportionally */
-  }
-
-  h1 {
-    font-size: 2.5rem; /* Slightly reduce title size */
+    transform: scale(0.9); /* Slightly shrink everything proportionally */
+    padding: 15px; /* Reduce padding to fit smaller screens */
   }
 
   #circle {
-    width: 80px;
+    width: 80px; /* Shrink the bauble */
     height: 80px;
-    margin-bottom: 30px;
   }
 
-  #circle-text {
-    font-size: 1rem;
+  h1 {
+    font-size: 2rem; /* Reduce the title size */
   }
 
   button {
-    font-size: 0.9rem;
-    padding: 8px 15px;
+    font-size: 0.9rem; /* Adjust button size */
+    padding: 8px 12px; /* Adjust padding */
   }
 
   select,
   input[type="range"] {
-    width: 90%; /* Adjust width for smaller screens */
+    width: 90%; /* Keep inputs responsive */
+  }
+}
+
+@media (max-width: 400px) {
+  #app-container {
+    transform: scale(0.8); /* Shrink even more for very small screens */
+    padding: 10px; /* Further reduce padding */
+  }
+
+  #circle {
+    width: 70px; /* Shrink the bauble more */
+    height: 70px;
+  }
+
+  h1 {
+    font-size: 1.8rem; /* Reduce title size further */
+  }
+
+  button {
+    font-size: 0.8rem; /* Adjust button font size */
+    padding: 6px 10px; /* Adjust padding */
   }
 }

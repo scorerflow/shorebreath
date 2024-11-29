@@ -60,14 +60,11 @@ function preloadAudio(audioPaths) {
 const cueSounds = preloadAudio(appConfig.audioFiles);
 const backgroundSounds = preloadAudio(appConfig.backgroundSounds);
 
-// General helper to update settings for an audio group
+// General helper to update sound settings (volume only)
 function updateSoundSettings(slider, audioGroup) {
   const volume = parseFloat(slider.value);
   Object.values(audioGroup).forEach((sound) => {
-    sound.volume = volume;
-    if (sound.paused) {
-      sound.play().catch((err) => console.warn(`Error playing sound: ${err}`));
-    }
+    sound.volume = volume; // Adjust volume without triggering playback
   });
 }
 
@@ -163,12 +160,18 @@ function playCueSound(phase) {
 // Manage background sound playback
 function manageBackgroundSound(play = false) {
   const selectedSoundKey = backgroundSoundDropdown.value;
+
+  // Stop all background sounds
   Object.values(backgroundSounds).forEach((sound) => {
     sound.pause();
-    sound.currentTime = 0;
+    sound.currentTime = 0; // Reset to the beginning
   });
+
+  // Play the selected background sound if requested
   if (play && backgroundSounds[selectedSoundKey]) {
-    backgroundSounds[selectedSoundKey].play().catch(() => {});
+    backgroundSounds[selectedSoundKey].play().catch((err) => {
+      console.warn(`Error playing background sound: ${err}`);
+    });
   }
 }
 
@@ -211,17 +214,21 @@ function setupEventListeners() {
 
   // Handle cue volume slider changes
   cueVolumeSlider.addEventListener("input", () => {
-    console.log("Cue volume slider changed:", cueVolumeSlider.value);
     updateSoundSettings(cueVolumeSlider, cueSounds);
   });
 
   // Handle background volume slider changes
   backgroundVolumeSlider.addEventListener("input", () => {
-    console.log(
-      "Background volume slider changed:",
-      backgroundVolumeSlider.value
-    );
-    updateSoundSettings(backgroundVolumeSlider, backgroundSounds);
+    const volume = parseFloat(backgroundVolumeSlider.value);
+    const selectedSoundKey = backgroundSoundDropdown.value;
+
+    // Update volume only for the selected background sound
+    if (backgroundSounds[selectedSoundKey]) {
+      backgroundSounds[selectedSoundKey].volume = volume;
+      console.log(
+        `Updated ${selectedSoundKey} background sound volume to: ${volume}`
+      );
+    }
   });
 
   // Handle toggling cue sounds
@@ -239,19 +246,11 @@ function setupEventListeners() {
     () => {
       Object.values(cueSounds).forEach((sound) => {
         sound.muted = false;
-        sound
-          .play()
-          .then(() => sound.pause())
-          .catch((err) => console.warn(`Error unlocking cue sound: ${err}`));
+        sound.pause(); // Ensure no sound starts playing unexpectedly
       });
       Object.values(backgroundSounds).forEach((sound) => {
         sound.muted = false;
-        sound
-          .play()
-          .then(() => sound.pause())
-          .catch((err) =>
-            console.warn(`Error unlocking background sound: ${err}`)
-          );
+        sound.pause(); // Ensure no sound starts playing unexpectedly
       });
     },
     { once: true }

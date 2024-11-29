@@ -189,8 +189,8 @@ function populateBackgroundSoundDropdown() {
   });
 }
 
-// Add event listeners
 function setupEventListeners() {
+  // Handle background sound dropdown change
   backgroundSoundDropdown.addEventListener("change", () => {
     if (isBreathing) manageBackgroundSound(true);
     document.body.style.backgroundImage = `url(${
@@ -198,6 +198,7 @@ function setupEventListeners() {
     })`;
   });
 
+  // Handle breathing technique dropdown change
   techniqueDropdown.addEventListener("change", () => {
     resetBreathingState();
     phaseDurations =
@@ -205,19 +206,48 @@ function setupEventListeners() {
       appConfig.techniques[appConfig.defaultTechnique];
   });
 
+  // Handle cue volume slider changes
   cueVolumeSlider.addEventListener("input", () =>
     updateSoundSettings(cueVolumeSlider, cueSounds)
   );
+
+  // Handle background volume slider changes
   backgroundVolumeSlider.addEventListener("input", () =>
     updateSoundSettings(backgroundVolumeSlider, backgroundSounds)
   );
 
+  // Handle toggling cue sounds
   cueToggle.addEventListener("change", () => {
     const isMuted = !cueToggle.checked;
     Object.values(cueSounds).forEach((sound) => (sound.muted = isMuted));
   });
 
+  // Handle start/stop button toggle
   toggleButton.addEventListener("click", toggleBreathing);
+
+  // Unlock audio playback for mobile browsers on first touch
+  document.body.addEventListener(
+    "touchstart",
+    () => {
+      Object.values(cueSounds).forEach((sound) => {
+        sound.muted = false;
+        sound
+          .play()
+          .then(() => sound.pause())
+          .catch((err) => console.warn(`Error unlocking cue sound: ${err}`));
+      });
+      Object.values(backgroundSounds).forEach((sound) => {
+        sound.muted = false;
+        sound
+          .play()
+          .then(() => sound.pause())
+          .catch((err) =>
+            console.warn(`Error unlocking background sound: ${err}`)
+          );
+      });
+    },
+    { once: true }
+  );
 }
 
 // Initialize the app

@@ -65,6 +65,9 @@ function updateSoundSettings(slider, audioGroup) {
   const volume = parseFloat(slider.value);
   Object.values(audioGroup).forEach((sound) => {
     sound.volume = volume;
+    if (sound.paused) {
+      sound.play().catch((err) => console.warn(`Error playing sound: ${err}`));
+    }
   });
 }
 
@@ -207,14 +210,19 @@ function setupEventListeners() {
   });
 
   // Handle cue volume slider changes
-  cueVolumeSlider.addEventListener("input", () =>
-    updateSoundSettings(cueVolumeSlider, cueSounds)
-  );
+  cueVolumeSlider.addEventListener("input", () => {
+    console.log("Cue volume slider changed:", cueVolumeSlider.value);
+    updateSoundSettings(cueVolumeSlider, cueSounds);
+  });
 
   // Handle background volume slider changes
-  backgroundVolumeSlider.addEventListener("input", () =>
-    updateSoundSettings(backgroundVolumeSlider, backgroundSounds)
-  );
+  backgroundVolumeSlider.addEventListener("input", () => {
+    console.log(
+      "Background volume slider changed:",
+      backgroundVolumeSlider.value
+    );
+    updateSoundSettings(backgroundVolumeSlider, backgroundSounds);
+  });
 
   // Handle toggling cue sounds
   cueToggle.addEventListener("change", () => {

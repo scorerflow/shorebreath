@@ -1,3 +1,12 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* General Styling */
 body {
   font-family: "Roboto Flex", sans-serif;
@@ -17,7 +26,7 @@ body {
 
 body::before {
   content: "";
-  position: fixed; /* Change to fixed to cover the viewport */
+  position: fixed; /* Covers the viewport */
   top: 0;
   left: 0;
   width: 100vw; /* Full viewport width */
@@ -27,6 +36,9 @@ body::before {
 }
 
 #app-container {
+  width: 100%;
+  max-width: 500px; /* Limit the width for larger screens */
+  margin: 0 auto; /* Center the content */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -118,11 +130,12 @@ h1 {
   color: #00a375;
 }
 
+/* Bauble Container */
 #bauble-container {
   position: relative;
-  width: 100%; /* Allow it to scale with #app-container */
-  height: auto;
+  width: 100%; /* Scale with #app-container */
   max-width: 250px;
+  height: auto;
   max-height: 250px;
   display: flex;
   justify-content: center;
@@ -152,7 +165,6 @@ h1 {
   text-align: center;
   transform-origin: center;
   transition: transform 1s ease-in-out;
-  margin-top: 25px;
 }
 
 /* Cue Sounds Button */
@@ -162,17 +174,17 @@ h1 {
   padding: 10px 20px;
   border: 1px solid #59785f;
   border-radius: 25px;
-  background-color: #59785f; /* Default active background */
-  color: #ffffff; /* Default active text color */
+  background-color: #59785f;
+  color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 #cue-toggle-button.inactive {
   background-color: rgb(247, 249, 250, 0.1);
-  color: #59785f; /* Inactive text color */
-  box-shadow: none; /* Remove shadow */
+  color: #59785f;
+  box-shadow: none;
 }
 
 /* Start/Stop Button */
@@ -208,23 +220,16 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%; /* Ensure it spans the width of the parent container */
+  width: 100%;
   margin-top: 20px;
   margin-bottom: 40px;
-  padding: 0 10px; /* Add some padding for spacing */
+  padding: 0 10px;
 }
 
 /* Background Sound Buttons */
 #background-sound {
   display: flex;
-  gap: 5px; /* Spacing between buttons */
-}
-
-/* Cue Sound Button */
-#cue-sound {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Spacing between label and button */
+  gap: 5px;
 }
 
 .background-sound-button {
@@ -234,7 +239,6 @@ h1 {
   border-radius: 20px;
   background-color: rgb(247, 249, 250, 0.1);
   color: #59785f;
-
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -242,34 +246,50 @@ h1 {
 .background-sound-button.active {
   background-color: #59785f;
   color: white;
-  border-color: #59785f;
 }
 
 .background-sound-button:hover {
   background-color: #59785f;
-  border-color: #59785f;
-  color: white;
-}
-
-/* Audio Controls */
-#audio-controls {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
 }
 
 /* Media Queries */
 @media (max-width: 600px) {
   #app-container {
-    width: 90%; /* Fit within the screen */
-    max-width: 500px; /* Limit width for larger mobile devices */
-    padding: 10px;
-    box-sizing: border-box;
+    width: 90%;
+    padding: 15px;
   }
 
   #bauble-container {
-    margin: 20px auto; /* Ensure proper spacing on smaller screens */
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  #technique-carousel {
+    max-width: 100%;
+  }
+
+  #controls-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  #circle-text {
+    font-size: 1.5rem;
+  }
+
+  #toggle-button {
+    width: 60px;
+    height: 60px;
+  }
+
+  .background-sound-button {
+    font-size: 0.8rem;
+    padding: 8px 10px;
   }
 }

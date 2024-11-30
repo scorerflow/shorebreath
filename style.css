@@ -233,11 +233,9 @@ h1 {
   }
 
   #bauble-container {
-    margin-top: 50px;
-    margin-top: 70px;
-    max-width: 120px; /* Further reduce bauble size */
-    max-height: 120px;
-    margin: 10px auto; /* Adjust spacing */
+    max-width: 140px; /* Further reduce bauble size */
+    max-height: 140px;
+    margin: 50px auto; /* Adjust spacing */
   }
 
   #circle-text {

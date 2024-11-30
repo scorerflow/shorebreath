@@ -6,75 +6,76 @@
     <title>Breathing App</title>
     <link rel="stylesheet" href="style.css" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&family=Quicksand:wght@400;600&display=swap"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
   </head>
   <body>
     <div id="app-container">
-      <h1>Take a Breath at Christmas</h1>
-      <p id="instruction">Press Start to begin.</p>
+      <h1>
+        Take a Deep Breath<br />
+        <span id="christmas-text">at Christmas</span>
+      </h1>
+
+      <!-- Breathing Technique Carousel -->
+      <div id="technique-carousel-container">
+        <button id="carousel-left" class="carousel-arrow">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div id="technique-carousel">
+          <button class="technique-btn" data-technique="box">
+            Box Breathing
+          </button>
+          <button class="technique-btn" data-technique="478">
+            4-7-8 Breathing
+          </button>
+          <button class="technique-btn" data-technique="resonant">
+            Resonant Breathing
+          </button>
+          <button class="technique-btn" data-technique="2to1">
+            2:1 Ratio Breathing
+          </button>
+        </div>
+        <button id="carousel-right" class="carousel-arrow">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
 
       <!-- Breathing Bauble -->
-      <div id="circle">
+      <div id="bauble-container">
+        <img id="bauble" src="images/Bauble.svg" alt="Bauble" />
         <span id="circle-text">Inhale</span>
+      </div>
+
+      <!-- Controls Container -->
+      <div id="controls-container">
+        <!-- Background Sound Buttons -->
+        <div id="background-sound">
+          <button data-sound="rain" class="background-sound-button">
+            Rain
+          </button>
+          <button data-sound="river" class="background-sound-button">
+            River
+          </button>
+          <button data-sound="fire" class="background-sound-button">
+            Fire
+          </button>
+        </div>
+
+        <!-- Cue Sound Button -->
+        <div id="cue-sound">
+          <label for="cue-volume">Gong</label>
+          <button id="cue-toggle-button" class="toggle-button active">
+            On
+          </button>
+        </div>
       </div>
 
       <!-- Start/Stop Button -->
       <div id="controls">
-        <button id="toggle-button">Start</button>
-      </div>
-
-      <!-- Breathing Choice Dropdown -->
-      <div id="breathing-technique">
-        <label for="technique" class="dropdown-label"
-          >Choose a Breathing Technique</label
-        >
-        <select id="technique">
-          <option value="box">Box Breathing</option>
-          <option value="478">4-7-8 Breathing</option>
-          <option value="resonant">Resonant Breathing</option>
-          <option value="2to1">2:1 Ratio Breathing</option>
-        </select>
-      </div>
-
-      <!-- Audio Controls -->
-      <div id="audio-controls">
-        <!-- Background Sound Group -->
-        <div class="background-group">
-          <div class="control-row">
-            <label for="background-sound" class="dropdown-label"
-              >Background Sound</label
-            >
-            <select id="background-sound">
-              <option value="rain">Rain</option>
-              <option value="river">River</option>
-              <option value="fire">Fire</option>
-            </select>
-          </div>
-          <div class="control-row">
-            <label for="background-volume">Volume</label>
-            <input
-              type="range"
-              id="background-volume"
-              min="0"
-              max="1"
-              step="0.01"
-            />
-          </div>
-        </div>
-
-        <!-- Cue Sound Group -->
-        <div class="cue-group">
-          <div class="control-row">
-            <label for="cue-toggle">Cue Sounds</label>
-            <input type="checkbox" id="cue-toggle" checked />
-          </div>
-          <div class="control-row">
-            <label for="cue-volume">Volume</label>
-            <input type="range" id="cue-volume" min="0" max="1" step="0.01" />
-          </div>
-        </div>
+        <button id="toggle-button">
+          <i id="toggle-icon" class="fas fa-play"></i>
+        </button>
       </div>
     </div>
     <script src="script.js"></script>

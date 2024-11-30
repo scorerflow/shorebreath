@@ -1,12 +1,13 @@
 // Get references to DOM elements
-const instruction = document.getElementById("instruction");
-const circle = document.getElementById("circle");
+const bauble = document.getElementById("bauble");
 const toggleButton = document.getElementById("toggle-button");
-const techniqueDropdown = document.getElementById("technique");
-const cueToggle = document.getElementById("cue-toggle");
-const cueVolumeSlider = document.getElementById("cue-volume");
-const backgroundSoundDropdown = document.getElementById("background-sound");
-const backgroundVolumeSlider = document.getElementById("background-volume");
+const toggleIcon = document.getElementById("toggle-icon");
+const techniqueButtons = document.querySelectorAll(".technique-btn");
+const cueToggleButton = document.getElementById("cue-toggle-button");
+const circleText = document.getElementById("circle-text");
+const backgroundSoundButtons = document.querySelectorAll(
+  ".background-sound-button"
+);
 
 // Configuration object for the app
 const appConfig = {
@@ -16,7 +17,7 @@ const appConfig = {
     exhale: "audio/windchime.mp3",
   },
   backgroundSounds: {
-    snow: "audio/rain.mp3",
+    rain: "audio/rain.mp3",
     river: "audio/river.mp3",
     fire: "audio/fire.mp3",
   },
@@ -35,7 +36,7 @@ const appConfig = {
 
 // Map background sounds to corresponding images
 const backgroundMapping = {
-  snow: "images/snow.PNG",
+  rain: "images/snow.PNG",
   river: "images/river.PNG",
   fire: "images/fire.PNG",
 };
@@ -57,87 +58,167 @@ function preloadAudio(audioPaths) {
   }, {});
 }
 
+function manageBackgroundSound(play = false) {
+  const activeButton = document.querySelector(
+    ".background-sound-button.active"
+  );
+
+  if (!activeButton) return;
+
+  const selectedSound = activeButton.getAttribute("data-sound");
+
+  // Stop all background sounds
+  Object.values(backgroundSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0; // Reset to the beginning
+  });
+
+  // Play the selected background sound only if breathing is active
+  if (play && isBreathing && backgroundSounds[selectedSound]) {
+    backgroundSounds[selectedSound].play().catch((err) => {
+      console.warn(`Error playing background sound: ${err}`);
+    });
+  }
+}
+
 const cueSounds = preloadAudio(appConfig.audioFiles);
 const backgroundSounds = preloadAudio(appConfig.backgroundSounds);
 
-// General helper to update sound settings (volume only)
-function updateSoundSettings(slider, audioGroup) {
-  const volume = parseFloat(slider.value);
-  Object.values(audioGroup).forEach((sound) => {
-    sound.volume = volume; // Adjust volume without triggering playback
-  });
+// Function to reset the active technique button
+function resetActiveButton() {
+  techniqueButtons.forEach((button) => button.classList.remove("active"));
 }
 
-// Reset circle animation
+// Attach event listeners to breathing technique buttons
+if (techniqueButtons.length > 0) {
+  techniqueButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      console.log(`Technique button clicked: ${button.dataset.technique}`);
+
+      // Reset active class
+      techniqueButtons.forEach((btn) => btn.classList.remove("active"));
+
+      // Add active class to the clicked button
+      button.classList.add("active");
+
+      // Update phase durations based on the technique
+      const selectedTechnique = button.dataset.technique;
+      phaseDurations =
+        appConfig.techniques[selectedTechnique] ||
+        appConfig.techniques[appConfig.defaultTechnique];
+
+      // Reset breathing session
+      resetBreathingState();
+    });
+  });
+} else {
+  console.warn("No technique buttons found.");
+}
+
+// Reset active background sound button
+function resetActiveBackgroundButton() {
+  backgroundSoundButtons.forEach((button) => button.classList.remove("active"));
+}
+
+// Handle background sound button clicks
+backgroundSoundButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    resetActiveBackgroundButton();
+    button.classList.add("active"); // Highlight the clicked button
+
+    const selectedSound = button.getAttribute("data-sound");
+    updateBackgroundSound(selectedSound); // Update background image
+
+    // Ensure sound doesn't play unless the session is active
+    if (isBreathing) {
+      manageBackgroundSound(true); // Play the sound only if breathing is active
+    } else {
+      manageBackgroundSound(false); // Stop all sounds if breathing is inactive
+    }
+  });
+});
+
+// Function to update and play the selected background sound
+function updateBackgroundSound(selectedSound) {
+  // Stop all background sounds
+  Object.values(backgroundSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0; // Reset playback position
+  });
+
+  // Update background image
+  if (backgroundMapping[selectedSound]) {
+    document.body.style.backgroundImage = `url(${backgroundMapping[selectedSound]})`;
+  }
+}
+
+// Set default background sound on load
+function setDefaultBackgroundSound() {
+  const defaultSoundButton = document.querySelector(
+    '.background-sound-button[data-sound="rain"]'
+  );
+  if (defaultSoundButton) {
+    defaultSoundButton.classList.add("active");
+    updateBackgroundSound("rain");
+  }
+}
+
+// Sync bauble animation with breathing phase
+function syncCircleAnimation(phase, duration) {
+  const labels = appConfig.phaseLabels[phaseDurations.length];
+  const phaseLabel = labels[phase];
+
+  const scaleValues = {
+    Inhale: 1.5, // Expand
+    Exhale: 1, // Contract
+  };
+
+  if (phaseLabel === "Hold") {
+    bauble.style.transition = "none";
+    circleText.style.transition = "none";
+    return;
+  }
+
+  bauble.style.transition = `transform ${duration / 1000}s ease-in-out`;
+  bauble.style.transform = `scale(${scaleValues[phaseLabel] || 1})`;
+
+  circleText.style.transition = `transform ${duration / 1000}s ease-in-out`;
+  circleText.style.transform = `translate(-50%, -50%) scale(${
+    scaleValues[phaseLabel] || 1
+  })`;
+}
+
+// Reset bauble animation
 function resetCircleAnimation() {
-  circle.style.transition = "none";
-  circle.style.transform = "scale(1)";
+  bauble.style.transition = "none";
+  bauble.style.transform = "scale(1)";
+  circleText.style.transition = "none";
+  circleText.style.transform = "translate(-50%, -50%) scale(1)";
+  circleText.textContent = "Inhale"; // Reset to default text
 }
 
 // Reset breathing state
 function resetBreathingState() {
-  clearTimeout(activeTimer); // Clear active timer
+  clearTimeout(activeTimer);
   isBreathing = false;
-  toggleButton.textContent = "Start"; // Update button text
-  toggleButton.classList.remove("active"); // Remove active state
-  pauseAllSounds(); // Stop any sounds playing
-  resetCircleAnimation(); // Reset circle to default state
-  if (instruction) instruction.style.display = "block"; // Show instruction text again
-  currentPhase = 0; // Reset breathing phase
-  document.getElementById("circle-text").textContent = "Inhale"; // Reset circle text
+  toggleIcon.classList.remove("fa-pause");
+  toggleIcon.classList.add("fa-play");
+  toggleButton.classList.remove("active");
+  pauseAllSounds();
+  resetCircleAnimation();
+  currentPhase = 0;
 }
 
 // Pause all sounds
 function pauseAllSounds() {
-  Object.values(cueSounds).forEach((sound) => sound.pause());
-  Object.values(backgroundSounds).forEach((sound) => sound.pause());
-}
-
-// Sync circle animation with breathing phase
-function syncCircleAnimation(phase, duration) {
-  if (!isBreathing) {
-    resetCircleAnimation();
-    return;
-  }
-  const labels = appConfig.phaseLabels[phaseDurations.length];
-  const phaseLabel = labels[phase];
-  const phaseToScale = {
-    Inhale: 1.5,
-    Exhale: 1,
-    Hold: circle.style.transform,
-  };
-  circle.style.transition = `transform ${duration / 1000}s ease-in-out`;
-  circle.style.transform = `scale(${phaseToScale[phaseLabel] || 1})`;
-}
-
-// Update text for the current breathing phase
-function updatePhaseText(phase) {
-  const labels = appConfig.phaseLabels[phaseDurations.length];
-  const phaseText = labels[phase] || "Exhale";
-  document.getElementById("circle-text").textContent = phaseText;
-}
-
-// Start breathing session
-function startBreathing() {
-  resetBreathingState(); // Ensure no lingering states
-  isBreathing = true;
-  toggleButton.textContent = "Stop"; // Update button text
-  toggleButton.classList.add("active"); // Add active state
-  if (instruction) instruction.style.display = "none"; // Hide instruction text
-  manageBackgroundSound(true);
-  runPhase();
-}
-
-// Run breathing phases in sequence
-function runPhase() {
-  if (!isBreathing) return;
-  updatePhaseText(currentPhase);
-  playCueSound(currentPhase);
-  syncCircleAnimation(currentPhase, phaseDurations[currentPhase]);
-  activeTimer = setTimeout(() => {
-    currentPhase = (currentPhase + 1) % phaseDurations.length;
-    runPhase();
-  }, phaseDurations[currentPhase]);
+  Object.values(cueSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0;
+  });
+  Object.values(backgroundSounds).forEach((sound) => {
+    sound.pause();
+    sound.currentTime = 0;
+  });
 }
 
 // Play cue sound for the current phase
@@ -148,127 +229,110 @@ function playCueSound(phase) {
     Inhale: cueSounds.inhale,
     Exhale: cueSounds.exhale,
   };
+
   Object.values(cueSounds).forEach((sound) => {
     sound.pause();
     sound.currentTime = 0;
   });
+
   if (phaseToSound[phaseLabel]) {
     phaseToSound[phaseLabel].play().catch(() => {});
   }
 }
 
-// Manage background sound playback
-function manageBackgroundSound(play = false) {
-  const selectedSoundKey = backgroundSoundDropdown.value;
+// Run breathing phases in sequence
+function runPhase() {
+  if (!isBreathing) return;
 
-  // Stop all background sounds
-  Object.values(backgroundSounds).forEach((sound) => {
-    sound.pause();
-    sound.currentTime = 0; // Reset to the beginning
-  });
+  updatePhaseText(currentPhase);
+  syncCircleAnimation(currentPhase, phaseDurations[currentPhase]);
+  playCueSound(currentPhase);
 
-  // Play the selected background sound if requested
-  if (play && backgroundSounds[selectedSoundKey]) {
-    backgroundSounds[selectedSoundKey].play().catch((err) => {
-      console.warn(`Error playing background sound: ${err}`);
-    });
-  }
+  activeTimer = setTimeout(() => {
+    currentPhase = (currentPhase + 1) % phaseDurations.length;
+    runPhase();
+  }, phaseDurations[currentPhase]);
+}
+
+// Update text for the current breathing phase
+function updatePhaseText(phase) {
+  const labels = appConfig.phaseLabels[phaseDurations.length];
+  circleText.textContent = labels[phase] || "Exhale";
 }
 
 // Toggle breathing session
 function toggleBreathing() {
   if (!isBreathing) {
     startBreathing();
+    toggleIcon.classList.remove("fa-play");
+    toggleIcon.classList.add("fa-pause");
   } else {
     resetBreathingState();
+    toggleIcon.classList.remove("fa-pause");
+    toggleIcon.classList.add("fa-play");
   }
 }
 
-// Populate dropdowns and set defaults
-function populateBackgroundSoundDropdown() {
-  backgroundSoundDropdown.innerHTML = "";
-  Object.keys(appConfig.backgroundSounds).forEach((key) => {
-    const option = document.createElement("option");
-    option.value = key;
-    option.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-    backgroundSoundDropdown.appendChild(option);
+// Start breathing session
+function startBreathing() {
+  resetBreathingState();
+  isBreathing = true;
+  toggleButton.classList.add("active");
+  manageBackgroundSound(true);
+  runPhase();
+}
+
+// Toggle Cue Sounds Button Logic
+function toggleCueSounds() {
+  const isActive = cueToggleButton.classList.contains("active");
+
+  if (isActive) {
+    cueToggleButton.classList.remove("active");
+    cueToggleButton.classList.add("inactive");
+    cueToggleButton.textContent = "Off";
+  } else {
+    cueToggleButton.classList.remove("inactive");
+    cueToggleButton.classList.add("active");
+    cueToggleButton.textContent = "On";
+  }
+
+  const isMuted = !cueToggleButton.classList.contains("active");
+  Object.values(cueSounds).forEach((sound) => {
+    sound.muted = isMuted;
   });
 }
 
-function setupEventListeners() {
-  // Handle background sound dropdown change
-  backgroundSoundDropdown.addEventListener("change", () => {
-    if (isBreathing) manageBackgroundSound(true);
-    document.body.style.backgroundImage = `url(${
-      backgroundMapping[backgroundSoundDropdown.value]
-    })`;
+// Attach event listener to Cue Sounds button
+cueToggleButton.addEventListener("click", toggleCueSounds);
+
+// **Add the Carousel Scrolling Code Below This Section**
+const carousel = document.getElementById("technique-carousel");
+const carouselLeftArrow = document.getElementById("carousel-left");
+const carouselRightArrow = document.getElementById("carousel-right");
+
+carouselLeftArrow.addEventListener("click", () => {
+  carousel.scrollBy({
+    left: -150,
+    behavior: "smooth",
   });
+});
 
-  // Handle breathing technique dropdown change
-  techniqueDropdown.addEventListener("change", () => {
-    resetBreathingState();
-    phaseDurations =
-      appConfig.techniques[techniqueDropdown.value] ||
-      appConfig.techniques[appConfig.defaultTechnique];
+carouselRightArrow.addEventListener("click", () => {
+  carousel.scrollBy({
+    left: 150,
+    behavior: "smooth",
   });
+});
 
-  // Handle cue volume slider changes
-  cueVolumeSlider.addEventListener("input", () => {
-    updateSoundSettings(cueVolumeSlider, cueSounds);
-  });
-
-  // Handle background volume slider changes
-  backgroundVolumeSlider.addEventListener("input", () => {
-    const volume = parseFloat(backgroundVolumeSlider.value);
-    const selectedSoundKey = backgroundSoundDropdown.value;
-
-    // Update volume only for the selected background sound
-    if (backgroundSounds[selectedSoundKey]) {
-      backgroundSounds[selectedSoundKey].volume = volume;
-      console.log(
-        `Updated ${selectedSoundKey} background sound volume to: ${volume}`
-      );
-    }
-  });
-
-  // Handle toggling cue sounds
-  cueToggle.addEventListener("change", () => {
-    const isMuted = !cueToggle.checked;
-    Object.values(cueSounds).forEach((sound) => (sound.muted = isMuted));
-  });
-
-  // Handle start/stop button toggle
-  toggleButton.addEventListener("click", toggleBreathing);
-
-  // Unlock audio playback for mobile browsers on first touch
-  document.body.addEventListener(
-    "touchstart",
-    () => {
-      Object.values(cueSounds).forEach((sound) => {
-        sound.muted = false;
-        sound.pause(); // Ensure no sound starts playing unexpectedly
-      });
-      Object.values(backgroundSounds).forEach((sound) => {
-        sound.muted = false;
-        sound.pause(); // Ensure no sound starts playing unexpectedly
-      });
-    },
-    { once: true }
-  );
-}
-
-// Initialize the app
+// Ensure no sounds are playing on load
 function initializeApp() {
-  populateBackgroundSoundDropdown();
-  document.body.style.backgroundImage = `url(${
-    backgroundMapping[backgroundSoundDropdown.value]
-  })`;
-  setupEventListeners();
-  Object.values(cueSounds).forEach(
-    (sound) => (sound.muted = !cueToggle.checked)
-  );
-  toggleButton.textContent = "Start"; // Initialize button state
-  if (instruction) instruction.style.display = "block"; // Ensure instruction is visible on load
+  setDefaultBackgroundSound();
+  toggleIcon.classList.add("fa-play");
+  pauseAllSounds();
 }
 
+// Attach event listeners
+toggleButton.addEventListener("click", toggleBreathing);
+
+// Ensure proper initialization of the app
 initializeApp();

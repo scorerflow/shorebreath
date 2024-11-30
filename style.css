@@ -252,44 +252,79 @@ h1 {
   background-color: #59785f;
 }
 
-/* Media Queries */
+/* For screens narrower than 600px (mobile-specific adjustments) */
 @media (max-width: 600px) {
   #app-container {
-    width: 90%;
-    padding: 15px;
+    width: 100%; /* Fit within the iframe width */
+    padding: 10px; /* Reduce padding for smaller screens */
+    box-sizing: border-box;
   }
 
-  #bauble-container {
-    max-width: 200px;
-    max-height: 200px;
+  #technique-carousel-container {
+    flex-wrap: wrap; /* Allow arrows and buttons to stack if needed */
+    gap: 5px;
+    max-width: 100%; /* Ensure it fits within the smaller screen */
   }
 
   #technique-carousel {
-    max-width: 100%;
+    padding: 5px 0; /* Reduce padding for smaller space */
+    gap: 10px; /* Adjust button spacing */
   }
 
-  #controls-container {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 400px) {
-  h1 {
-    font-size: 1.8rem;
+  #bauble-container {
+    max-width: 180px; /* Reduce bauble size for smaller screens */
+    max-height: 180px;
+    margin: 10px auto; /* Maintain spacing */
   }
 
   #circle-text {
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* Reduce text size inside the bauble */
   }
 
-  #toggle-button {
-    width: 60px;
-    height: 60px;
+  #controls-container {
+    flex-wrap: wrap; /* Allow controls to stack vertically */
+    gap: 10px; /* Add spacing between rows */
+    justify-content: center; /* Center controls for smaller screens */
+  }
+
+  #background-sound,
+  #cue-sound {
+    flex: 1 1 100%; /* Make each control row take full width */
+    justify-content: center; /* Center align rows */
   }
 
   .background-sound-button {
-    font-size: 0.8rem;
-    padding: 8px 10px;
+    font-size: 0.8rem; /* Reduce button font size */
+    padding: 8px 10px; /* Adjust padding */
+  }
+
+  #toggle-button {
+    width: 60px; /* Reduce Start/Stop button size */
+    height: 60px;
+  }
+}
+
+/* For extremely narrow screens (400px or less) */
+@media (max-width: 400px) {
+  #app-container {
+    padding: 5px; /* Further reduce padding */
+  }
+
+  h1 {
+    font-size: 1.8rem; /* Reduce heading size */
+  }
+
+  #circle-text {
+    font-size: 1rem; /* Adjust text inside bauble */
+  }
+
+  #toggle-button {
+    width: 50px; /* Smaller Start/Stop button */
+    height: 50px;
+  }
+
+  .background-sound-button {
+    font-size: 0.7rem; /* Reduce button font size further */
+    padding: 6px 8px;
   }
 }

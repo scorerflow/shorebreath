@@ -26,19 +26,19 @@ body {
 
 body::before {
   content: "";
-  position: fixed; /* Covers the viewport */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
-  background: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
   z-index: -1;
 }
 
 #app-container {
   width: 100%;
-  max-width: 500px; /* Limit the width for larger screens */
-  margin: 0 auto; /* Center the content */
+  max-width: 500px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,14 +57,13 @@ h1 {
   text-shadow: 2px 2px 4px rgb(165, 159, 159);
   text-align: center;
   margin-bottom: 20px;
-  line-height: 1.2; /* Adjust line spacing for better readability */
+  line-height: 1.2;
 }
 
-/* Styling for "at Christmas" */
 #christmas-text {
-  font-size: 3rem; /* Slightly smaller than the main text */
-  display: block; /* Ensure it stays on a separate line */
-  margin-top: 5px; /* Add spacing between the two lines */
+  font-size: 2.5rem;
+  display: block;
+  margin-top: 5px;
   margin-bottom: 5px;
 }
 
@@ -75,48 +74,43 @@ h1 {
   justify-content: center;
   gap: 10px;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 #technique-carousel {
   display: flex;
   overflow-x: auto;
-  gap: 15px;
+  gap: 10px;
   scroll-behavior: smooth;
-  padding: 10px 0;
+  padding: 5px 0;
   max-width: 300px;
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
 }
 
 #technique-carousel::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for WebKit browsers */
+  display: none;
 }
 
 #technique-carousel .technique-btn {
   font-family: "Quicksand", sans-serif;
   font-size: 1rem;
-  padding: 10px 20px;
+  padding: 8px 15px;
   border: 1px solid #59785f;
   border-radius: 25px;
-  background-color: rgb(247, 249, 250, 0.1);
+  background-color: rgba(247, 249, 250, 0.1);
   color: #59785f;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  white-space: nowrap;
 }
 
-#technique-carousel .technique-btn:hover {
-  background-color: #59785f;
-  color: #ffffff;
-}
-
+#technique-carousel .technique-btn:hover,
 #technique-carousel .technique-btn.active {
   background-color: #59785f;
-  color: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  color: white;
 }
 
+/* Carousel Arrows */
 .carousel-arrow {
   background: none;
   border: none;
@@ -130,19 +124,16 @@ h1 {
   color: #00a375;
 }
 
-/* Bauble Container */
+/* Breathing Bauble */
 #bauble-container {
   position: relative;
-  width: 100%; /* Scale with #app-container */
-  max-width: 250px;
-  height: auto;
-  max-height: 250px;
+  width: 200px; /* Adjust size for smaller screens */
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: visible;
-  margin-top: 50px;
-  margin-bottom: 70px;
+  margin: 10px auto 20px auto;
 }
 
 #bauble {
@@ -158,61 +149,11 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1);
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #ba7c11;
-  pointer-events: none;
   text-align: center;
-  transform-origin: center;
   transition: transform 1s ease-in-out;
-}
-
-/* Cue Sounds Button */
-#cue-toggle-button {
-  font-family: "Quicksand", sans-serif;
-  font-size: 1rem;
-  padding: 10px 20px;
-  border: 1px solid #59785f;
-  border-radius: 25px;
-  background-color: #59785f;
-  color: #ffffff;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-#cue-toggle-button.inactive {
-  background-color: rgb(247, 249, 250, 0.1);
-  color: #59785f;
-  box-shadow: none;
-}
-
-/* Start/Stop Button */
-#toggle-button {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: none;
-  background-color: #59785f;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-bottom: 20px;
-}
-
-#toggle-button.active {
-  background-color: #d16161;
-}
-
-#toggle-button:hover {
-  background-color: #59785f;
-}
-
-#toggle-button.active:hover {
-  background-color: #d16161;
 }
 
 /* Controls Container */
@@ -221,110 +162,90 @@ h1 {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-top: 20px;
-  margin-bottom: 40px;
+  margin: 10px 0 20px;
   padding: 0 10px;
 }
 
-/* Background Sound Buttons */
 #background-sound {
   display: flex;
   gap: 5px;
 }
 
+#cue-sound {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .background-sound-button {
-  font-size: 1rem;
-  padding: 10px 15px;
+  font-size: 0.9rem;
+  padding: 5px 10px;
   border: 1px solid #59785f;
   border-radius: 20px;
-  background-color: rgb(247, 249, 250, 0.1);
+  background-color: rgba(247, 249, 250, 0.1);
   color: #59785f;
-  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.background-sound-button.active {
+.background-sound-button.active,
+.background-sound-button:hover {
   background-color: #59785f;
   color: white;
 }
 
-.background-sound-button:hover {
+/* Start/Stop Button */
+#toggle-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
   background-color: #59785f;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* For screens narrower than 600px (mobile-specific adjustments) */
+/* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
   #app-container {
-    width: 100%; /* Fit within the iframe width */
-    padding: 10px; /* Reduce padding for smaller screens */
-    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
   }
 
   #technique-carousel-container {
-    flex-wrap: wrap; /* Allow arrows and buttons to stack if needed */
+    max-width: 100%;
     gap: 5px;
-    max-width: 100%; /* Ensure it fits within the smaller screen */
   }
 
   #technique-carousel {
-    padding: 5px 0; /* Reduce padding for smaller space */
-    gap: 10px; /* Adjust button spacing */
+    gap: 5px;
   }
 
   #bauble-container {
-    max-width: 180px; /* Reduce bauble size for smaller screens */
-    max-height: 180px;
-    margin: 10px auto; /* Maintain spacing */
+    width: 180px;
+    height: 180px;
+    margin: 10px auto;
   }
 
   #circle-text {
-    font-size: 1.2rem; /* Reduce text size inside the bauble */
+    font-size: 1.5rem;
   }
 
   #controls-container {
-    flex-wrap: wrap; /* Allow controls to stack vertically */
-    gap: 10px; /* Add spacing between rows */
-    justify-content: center; /* Center controls for smaller screens */
-  }
-
-  #background-sound,
-  #cue-sound {
-    flex: 1 1 100%; /* Make each control row take full width */
-    justify-content: center; /* Center align rows */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
   }
 
   .background-sound-button {
-    font-size: 0.8rem; /* Reduce button font size */
-    padding: 8px 10px; /* Adjust padding */
+    font-size: 0.8rem;
+    padding: 5px 8px;
   }
 
   #toggle-button {
-    width: 60px; /* Reduce Start/Stop button size */
-    height: 60px;
-  }
-}
-
-/* For extremely narrow screens (400px or less) */
-@media (max-width: 400px) {
-  #app-container {
-    padding: 5px; /* Further reduce padding */
-  }
-
-  h1 {
-    font-size: 1.8rem; /* Reduce heading size */
-  }
-
-  #circle-text {
-    font-size: 1rem; /* Adjust text inside bauble */
-  }
-
-  #toggle-button {
-    width: 50px; /* Smaller Start/Stop button */
+    width: 50px;
     height: 50px;
-  }
-
-  .background-sound-button {
-    font-size: 0.7rem; /* Reduce button font size further */
-    padding: 6px 8px;
   }
 }

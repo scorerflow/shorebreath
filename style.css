@@ -17,11 +17,11 @@ body {
 
 body::before {
   content: "";
-  position: absolute;
+  position: fixed; /* Change to fixed to cover the viewport */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
   background: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
   z-index: -1;
 }
@@ -120,9 +120,9 @@ h1 {
 
 #bauble-container {
   position: relative;
-  width: 50vw; /* Use viewport width for scaling */
-  height: 50vw; /* Maintain square shape */
-  max-width: 250px; /* Cap the size on larger screens */
+  width: 100%; /* Allow it to scale with #app-container */
+  height: auto;
+  max-width: 250px;
   max-height: 250px;
   display: flex;
   justify-content: center;
@@ -263,30 +263,13 @@ h1 {
 /* Media Queries */
 @media (max-width: 600px) {
   #app-container {
-    transform: scale(0.9);
-    padding: 15px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  #circle-text {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 400px) {
-  #app-container {
-    transform: scale(0.8);
+    width: 90%; /* Fit within the screen */
+    max-width: 500px; /* Limit width for larger mobile devices */
     padding: 10px;
+    box-sizing: border-box;
   }
 
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  #circle-text {
-    font-size: 0.9rem;
+  #bauble-container {
+    margin: 20px auto; /* Ensure proper spacing on smaller screens */
   }
 }

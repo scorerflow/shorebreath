@@ -133,7 +133,7 @@ h1 {
   justify-content: center;
   align-items: center;
   overflow: visible;
-  margin: 10px auto 20px auto;
+  margin: 50px auto 50px auto; /* Default spacing for larger screens */
 }
 
 #bauble {
@@ -233,9 +233,9 @@ h1 {
   }
 
   #bauble-container {
-    max-width: 140px; /* Further reduce bauble size */
-    max-height: 140px;
-    margin: 50px auto; /* Adjust spacing */
+    max-width: 120px; /* Further reduce bauble size */
+    max-height: 120px;
+    margin: 60px auto 60px auto;
   }
 
   #circle-text {
@@ -300,7 +300,7 @@ h1 {
     margin-top: 70px;
     max-width: 100px; /* Further reduce bauble size */
     max-height: 100px;
-    margin: 5px auto; /* Reduce margin */
+    margin: 70px auto 70px auto; /* Further increase spacing for very small screens */
   }
 
   #circle-text {

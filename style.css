@@ -118,17 +118,18 @@ h1 {
   color: #00a375;
 }
 
-/* Breathing Bauble */
 #bauble-container {
   position: relative;
-  width: 250px;
-  height: 250px;
+  width: 50vw; /* Use viewport width for scaling */
+  height: 50vw; /* Maintain square shape */
+  max-width: 250px; /* Cap the size on larger screens */
+  max-height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: visible;
-  margin-top: 60px;
-  margin-bottom: 80px;
+  margin-top: 50px;
+  margin-bottom: 70px;
 }
 
 #bauble {

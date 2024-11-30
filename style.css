@@ -233,6 +233,8 @@ h1 {
   }
 
   #bauble-container {
+    margin-top: 50px;
+    margin-top: 70px;
     max-width: 120px; /* Further reduce bauble size */
     max-height: 120px;
     margin: 10px auto; /* Adjust spacing */
@@ -296,6 +298,8 @@ h1 {
   }
 
   #bauble-container {
+    margin-top: 50px;
+    margin-top: 70px;
     max-width: 100px; /* Further reduce bauble size */
     max-height: 100px;
     margin: 5px auto; /* Reduce margin */

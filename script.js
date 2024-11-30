@@ -329,6 +329,13 @@ function initializeApp() {
   setDefaultBackgroundSound();
   toggleIcon.classList.add("fa-play");
   pauseAllSounds();
+  // Highlight the default breathing technique button
+  const defaultTechniqueButton = document.querySelector(
+    `.technique-btn[data-technique="${appConfig.defaultTechnique}"]`
+  );
+  if (defaultTechniqueButton) {
+    defaultTechniqueButton.classList.add("active");
+  }
 }
 
 // Attach event listeners

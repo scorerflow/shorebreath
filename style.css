@@ -53,6 +53,7 @@ h1 {
   font-size: 3rem; /* Slightly smaller than the main text */
   display: block; /* Ensure it stays on a separate line */
   margin-top: 5px; /* Add spacing between the two lines */
+  margin-bottom: 5px;
 }
 
 /* Carousel for Breathing Techniques */
@@ -186,6 +187,7 @@ h1 {
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 20px;
 }
 
 #toggle-button.active {

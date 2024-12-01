@@ -233,9 +233,9 @@ h1 {
   }
 
   #bauble-container {
-    max-width: 120px; /* Further reduce bauble size */
-    max-height: 120px;
-    margin: 60px auto 60px auto;
+    max-width: 150px; /* Further reduce bauble size */
+    max-height: 150px;
+    margin: 40px auto 40px auto;
   }
 
   #circle-text {
@@ -298,9 +298,9 @@ h1 {
   #bauble-container {
     margin-top: 50px;
     margin-top: 70px;
-    max-width: 100px; /* Further reduce bauble size */
-    max-height: 100px;
-    margin: 70px auto 70px auto; /* Further increase spacing for very small screens */
+    max-width: 120px; /* Further reduce bauble size */
+    max-height: 120px;
+    margin: 50px auto 50px auto; /* Further increase spacing for very small screens */
   }
 
   #circle-text {

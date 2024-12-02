@@ -257,8 +257,10 @@ h1 {
   }
 
   #app-container {
-    width: 100%;
+    width: 90%;
     padding: 10px;
+    transform: scale(0.9); /* Scale down the app */
+    transform-origin: center top; /* Ensure proper alignment */
   }
 
   h1 {
@@ -336,10 +338,10 @@ h1 {
   }
 
   #app-container {
-    width: 100%;
+    width: 95%;
     padding: 5px; /* Reduce padding further for smaller screens */
-    transform: scale(0.95); /* Slightly scale down the app */
-    transform-origin: top center; /* Ensure proper alignment */
+    transform: scale(0.85); /* Slightly scale down the app */
+    transform-origin: center top; /* Ensure proper alignment */
   }
 
   h1 {

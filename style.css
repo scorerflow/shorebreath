@@ -241,6 +241,21 @@ h1 {
 
 /* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
+  body {
+    background: url("images/snow.PNG") center / cover no-repeat;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3); /* Ensure transparency */
+    z-index: -1;
+  }
+
   #app-container {
     width: 85%;
     padding: 10px;
@@ -305,6 +320,21 @@ h1 {
 
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
+  body {
+    background: url("images/snow.PNG") center / cover no-repeat;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3); /* Ensure transparency */
+    z-index: -1;
+  }
+
   #app-container {
     width: 85%;
     padding: 5px; /* Reduce padding further for smaller screens */

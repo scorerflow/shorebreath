@@ -331,7 +331,7 @@ h1 {
   #bauble-container {
     max-width: 150px; /* Further reduce bauble size */
     max-height: 150px;
-    margin: 30px auto 30px auto; /* Further increase spacing for very small screens */
+    margin: 10px auto 10px auto; /* Further increase spacing for very small screens */
   }
 
   #circle-text {
@@ -345,7 +345,7 @@ h1 {
 
   .background-sound-button {
     font-size: 0.7rem; /* Adjust font size */
-    padding: 4px 6px; /* Reduce button padding */
+    padding: 8px 12px; /* Reduce button padding */
     margin-bottom: 20px;
   }
 

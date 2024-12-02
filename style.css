@@ -154,6 +154,7 @@ h1 {
   color: #ba7c11;
   text-align: center;
   transition: transform 1s ease-in-out;
+  margin-top: 20px;
 }
 
 /* Controls Container */
@@ -162,7 +163,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 10px 0 20px;
+  margin: 20px 0 20px;
   padding: 0 10px;
 }
 
@@ -193,18 +194,49 @@ h1 {
   color: white;
 }
 
+/* Cue Sounds Button */
+#cue-toggle-button {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: 1px solid #59785f;
+  border-radius: 25px;
+  background-color: #59785f; /* Default active background */
+  color: #ffffff; /* Default active text color */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+#cue-toggle-button.inactive {
+  background-color: rgba(247, 249, 250, 0.1); /* Inactive background */
+  color: #59785f; /* Inactive text color */
+  border-color: #59785f; /* Match border color with text */
+  box-shadow: none; /* Remove shadow for inactive state */
+}
+
+#cue-toggle-button:hover:not(.inactive) {
+  background-color: #4b674f; /* Darker green when hovering on active button */
+}
+
+#cue-toggle-button.inactive:hover {
+  background-color: rgba(247, 249, 250, 0.2); /* Slightly lighter on hover */
+}
+
 /* Start/Stop Button */
 #toggle-button {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   background-color: #59785f;
+  border-color: #59785f;
   color: white;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 20px;
 }
 
 /* Responsive Adjustments for Smaller Screens */
@@ -233,8 +265,8 @@ h1 {
   }
 
   #bauble-container {
-    max-width: 170px; /* Further reduce bauble size */
-    max-height: 170px;
+    max-width: 175px;
+    max-height: 175px;
     margin: 50px auto 50px auto;
   }
 
@@ -257,6 +289,7 @@ h1 {
   .background-sound-button {
     font-size: 0.8rem;
     padding: 5px 8px;
+    margin-bottom: 20px;
   }
 
   #toggle-button {
@@ -313,6 +346,7 @@ h1 {
   .background-sound-button {
     font-size: 0.7rem; /* Adjust font size */
     padding: 4px 6px; /* Reduce button padding */
+    margin-bottom: 20px;
   }
 
   #toggle-button {

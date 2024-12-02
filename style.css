@@ -301,7 +301,7 @@ h1 {
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
   #app-container {
-    width: 90%;
+    width: 80%;
     padding: 5px; /* Reduce padding further for smaller screens */
     transform: scale(0.95); /* Slightly scale down the app */
     transform-origin: top center; /* Ensure proper alignment */
@@ -331,7 +331,7 @@ h1 {
   #bauble-container {
     max-width: 150px; /* Further reduce bauble size */
     max-height: 150px;
-    margin: 35px auto 35px auto; /* Further increase spacing for very small screens */
+    margin: 45px auto 45px auto; /* Further increase spacing for very small screens */
   }
 
   #circle-text {

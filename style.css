@@ -242,7 +242,7 @@ h1 {
 /* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
   #app-container {
-    width: 90%;
+    width: 85%;
     padding: 10px;
   }
 
@@ -301,7 +301,7 @@ h1 {
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
   #app-container {
-    width: 80%;
+    width: 85%;
     padding: 5px; /* Reduce padding further for smaller screens */
     transform: scale(0.95); /* Slightly scale down the app */
     transform-origin: top center; /* Ensure proper alignment */
@@ -321,7 +321,7 @@ h1 {
 
   #technique-carousel .technique-btn {
     font-size: 0.7rem; /* Make buttons smaller */
-    padding: 4px 8px; /* Reduce padding */
+    padding: 5px 10px; /* Reduce padding */
   }
 
   .carousel-arrow {
@@ -331,7 +331,7 @@ h1 {
   #bauble-container {
     max-width: 150px; /* Further reduce bauble size */
     max-height: 150px;
-    margin: 45px auto 45px auto; /* Further increase spacing for very small screens */
+    margin: 40px auto 40px auto; /* Further increase spacing for very small screens */
   }
 
   #circle-text {

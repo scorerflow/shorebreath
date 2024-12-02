@@ -21,7 +21,7 @@ body {
   align-items: center;
   flex-direction: column;
   position: relative;
-  background: url("images/snow.PNG") center / cover no-repeat;
+  background-image: url("images/snow.PNG") center / cover no-repeat;
   -webkit-background-size: cover; /* iOS-specific */
 }
 

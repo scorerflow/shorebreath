@@ -267,7 +267,7 @@ h1 {
   #bauble-container {
     max-width: 175px;
     max-height: 175px;
-    margin: 30px auto 30px auto;
+    margin: 35px auto 35px auto;
   }
 
   #circle-text {
@@ -331,7 +331,7 @@ h1 {
   #bauble-container {
     max-width: 150px; /* Further reduce bauble size */
     max-height: 150px;
-    margin: 20px auto 20px auto; /* Further increase spacing for very small screens */
+    margin: 35px auto 35px auto; /* Further increase spacing for very small screens */
   }
 
   #circle-text {

@@ -85,7 +85,7 @@ h1 {
   gap: 10px;
   scroll-behavior: smooth;
   padding: 5px 0;
-  max-width: 300px;
+  max-width: 350px;
   scrollbar-width: none;
 }
 
@@ -243,6 +243,11 @@ h1 {
 
 /* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
+  body {
+    background: url("images/snow.PNG") center / cover no-repeat !important;
+    -webkit-background-size: cover !important;
+  }
+
   #app-container {
     width: 90%;
     padding: 10px;
@@ -309,6 +314,11 @@ h1 {
 
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
+  body {
+    background: url("images/snow.PNG") center / cover no-repeat !important;
+    -webkit-background-size: cover !important;
+  }
+
   #app-container {
     width: 95%;
     padding: 5px; /* Reduce padding further for smaller screens */

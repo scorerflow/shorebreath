@@ -21,7 +21,7 @@ body {
   align-items: center;
   flex-direction: column;
   position: relative;
-  background: url("images/snow.PNG") center center / cover no-repeat !important;
+  background: url("images/snow.PNG") center center / cover no-repeat;
   -webkit-background-size: cover; /* iOS-specific */
   background-attachment: fixed;
 }
@@ -243,11 +243,6 @@ h1 {
 
 /* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
-  body {
-    background: url("images/snow.PNG") center / cover no-repeat !important;
-    -webkit-background-size: cover !important;
-  }
-
   body::before {
     z-index: 0; /* Adjust z-index for mobile to avoid conflicts */
   }
@@ -320,13 +315,6 @@ h1 {
 
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
-  body {
-    background: url("images/snow.PNG") center / cover no-repeat;
-    background-attachment: fixed; /* Ensure the background remains static */
-    -webkit-background-size: cover; /* iOS-specific fix */
-    background-size: cover;
-  }
-
   body::before {
     z-index: 0; /* Adjust z-index for mobile to avoid conflicts */
   }

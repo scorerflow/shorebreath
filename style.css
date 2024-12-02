@@ -179,8 +179,8 @@ h1 {
 }
 
 .background-sound-button {
-  font-size: 0.9rem;
-  padding: 5px 10px;
+  font-size: 1rem;
+  padding: 10px 20px;
   border: 1px solid #59785f;
   border-radius: 20px;
   background-color: rgba(247, 249, 250, 0.1);
@@ -198,14 +198,14 @@ h1 {
 #cue-toggle-button {
   font-family: "Quicksand", sans-serif;
   font-size: 1rem;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border: 1px solid #59785f;
   border-radius: 25px;
   background-color: #59785f; /* Default active background */
   color: #ffffff; /* Default active text color */
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 2px 6px rgba(94, 75, 75, 0.1); /* Subtle shadow */
 }
 
 #cue-toggle-button.inactive {

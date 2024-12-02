@@ -28,7 +28,7 @@ body {
 
 body::before {
   content: "";
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -50,6 +50,7 @@ body::before {
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  z-index: -1;
 }
 
 /* Main Heading */
@@ -249,7 +250,12 @@ h1 {
     -webkit-background-size: cover !important;
   }
 
+  body::before {
+    z-index: 0; /* Adjust z-index for mobile to avoid conflicts */
+  }
+
   #app-container {
+    z-index: 1;
     margin-top: 20px;
     width: 90%;
     padding: 10px;
@@ -323,7 +329,12 @@ h1 {
     background-size: cover;
   }
 
+  body::before {
+    z-index: 0; /* Adjust z-index for mobile to avoid conflicts */
+  }
+
   #app-container {
+    z-index: 1;
     margin-top: 20px;
     width: 90%; /* Slightly increase width for better scaling */
     padding: 10px;

@@ -21,12 +21,12 @@ body {
   align-items: center;
   flex-direction: column;
   position: relative;
-  background: url("images/snow.PNG") center / cover no-repeat;
+  background: url("images/snow.PNG") center center / cover no-repeat !important;
   -webkit-background-size: cover; /* iOS-specific */
   background-attachment: fixed;
 }
 
-body::before {
+/* body::before {
   content: "";
   position: fixed;
   top: 0;
@@ -35,7 +35,7 @@ body::before {
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
   z-index: -1;
-}
+} */
 
 #app-container {
   width: 100%;

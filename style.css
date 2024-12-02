@@ -31,8 +31,8 @@ body::before {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.3);
   z-index: -1;
 }
@@ -315,15 +315,16 @@ h1 {
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
   body {
-    background: url("images/snow.PNG") center / cover no-repeat !important;
-    -webkit-background-size: cover !important;
+    background: url("images/snow.PNG") center / cover no-repeat;
+    background-attachment: fixed; /* Ensure the background remains static */
+    -webkit-background-size: cover; /* iOS-specific fix */
+    background-size: cover;
   }
 
   #app-container {
-    width: 95%;
-    padding: 5px; /* Reduce padding further for smaller screens */
-    transform: scale(0.85); /* Slightly scale down the app */
-    transform-origin: center top; /* Ensure proper alignment */
+    width: 90%; /* Slightly increase width for better scaling */
+    padding: 10px;
+    margin: 0 auto;
   }
 
   h1 {

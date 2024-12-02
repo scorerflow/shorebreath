@@ -241,13 +241,8 @@ h1 {
 
 /* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
-  body {
-    background: url("images/snow.PNG") center / cover no-repeat;
-  }
-
   #app-container {
     width: 85%;
-    height: 90%;
     padding: 10px;
   }
 
@@ -305,13 +300,8 @@ h1 {
 
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
-  body {
-    background: url("images/snow.PNG") center / cover no-repeat;
-  }
-
   #app-container {
     width: 85%;
-    height: 90%;
     padding: 5px; /* Reduce padding further for smaller screens */
     transform: scale(0.95); /* Slightly scale down the app */
     transform-origin: top center; /* Ensure proper alignment */

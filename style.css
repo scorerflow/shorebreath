@@ -21,8 +21,9 @@ body {
   align-items: center;
   flex-direction: column;
   position: relative;
-  background-image: url("images/snow.PNG") center / cover no-repeat;
+  background: url("images/snow.PNG") center / cover no-repeat;
   -webkit-background-size: cover; /* iOS-specific */
+  background-attachment: fixed;
 }
 
 body::before {
@@ -242,6 +243,11 @@ h1 {
 
 /* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
+  body {
+    background: url("images/snow.PNG") center / cover no-repeat;
+    -webkit-background-size: cover; /* iOS-specific */
+  }
+
   #app-container {
     width: 90%;
     padding: 10px;
@@ -308,6 +314,11 @@ h1 {
 
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
+  body {
+    background: url("images/snow.PNG") center / cover no-repeat;
+    -webkit-background-size: cover; /* iOS-specific */
+  }
+
   #app-container {
     width: 95%;
     padding: 5px; /* Reduce padding further for smaller screens */

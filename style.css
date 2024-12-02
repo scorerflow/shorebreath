@@ -246,6 +246,11 @@ h1 {
     padding: 10px;
   }
 
+  h1 {
+    font-size: 1.8rem; /* Reduce heading size */
+    margin-top: 40px;
+  }
+
   #technique-carousel-container {
     max-width: 100%;
     gap: 5px;
@@ -309,9 +314,11 @@ h1 {
 
   h1 {
     font-size: 1.8rem; /* Reduce heading size */
+    margin-top: 40px;
   }
 
   #christmas-text {
+    margin-top: 20px;
     font-size: 1.5rem; /* Adjust size of "at Christmas" text */
   }
 

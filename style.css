@@ -244,7 +244,6 @@ h1 {
 /* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
   body {
-    margin-top: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -334,7 +333,6 @@ h1 {
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
   body {
-    margin-top: 40px;
     display: flex;
     justify-content: center;
     align-items: center;

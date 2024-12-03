@@ -262,9 +262,12 @@ function runPhase() {
   const labels = appConfig.phaseLabels[phaseDurations.length];
   const phaseLabel = labels[currentPhase];
 
-  // Stop sounds if in "Hold" phase
+  // Stop cue sounds only if in "Hold" phase
   if (phaseLabel === "Hold") {
-    pauseAllSounds();
+    Object.values(cueSounds).forEach((sound) => {
+      sound.pause();
+      sound.currentTime = 0; // Reset cue sound playback
+    });
   } else {
     playCueSound(currentPhase);
   }

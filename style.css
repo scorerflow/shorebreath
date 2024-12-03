@@ -248,7 +248,6 @@ h1 {
     justify-content: center;
     align-items: center;
     padding: 10px; /* Add padding to ensure space around the app */
-    box-sizing: border-box;
   }
 
   body::before {
@@ -257,11 +256,13 @@ h1 {
 
   #app-container {
     z-index: 1;
-    margin-top: 20px;
+    margin: auto;
     width: 95%;
+    max-width: 400px;
     padding: 10px;
     transform: scale(0.9); /* Scale down the app */
     transform-origin: center top; /* Ensure proper alignment */
+    box-sizing: border-box;
   }
 
   h1 {
@@ -328,7 +329,6 @@ h1 {
     justify-content: center;
     align-items: center;
     padding: 15px; /* Increase padding for very small screens */
-    box-sizing: border-box;
   }
 
   body::before {
@@ -337,10 +337,11 @@ h1 {
 
   #app-container {
     z-index: 1;
-    margin-top: 20px;
     width: 95%; /* Slightly increase width for better scaling */
     padding: 10px;
     margin: 0 auto;
+    box-sizing: border-box;
+    max-width: 350px;
   }
 
   h1 {

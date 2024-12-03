@@ -259,7 +259,7 @@ h1 {
     margin: auto;
     width: 95%;
     max-width: 400px;
-    max-height: 90vh;
+    max-height: 98vh;
     padding: 10px;
     transform: scale(0.9); /* Scale down the app */
     transform-origin: center center; /* Ensure proper alignment */
@@ -343,7 +343,7 @@ h1 {
     margin: 0 auto;
     box-sizing: border-box;
     max-width: 350px;
-    max-height: 90vh;
+    max-height: 98vh;
   }
 
   h1 {

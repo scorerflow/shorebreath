@@ -382,6 +382,18 @@ function initializeApp() {
   if (defaultTechniqueButton) {
     defaultTechniqueButton.classList.add("active");
   }
+
+  // Default cue sounds toggle to "Off" on mobile
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    cueToggleButton.classList.remove("active");
+    cueToggleButton.classList.add("inactive");
+    cueToggleButton.textContent = "Off";
+
+    // Ensure cue sounds are muted
+    Object.values(cueSounds).forEach((sound) => {
+      sound.muted = true;
+    });
+  }
 }
 
 // Attach event listeners

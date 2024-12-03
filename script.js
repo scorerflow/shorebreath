@@ -58,12 +58,24 @@ function preloadAudio(audioPaths) {
   }, {});
 }
 
+// function initializeMobileAudio() {
+//   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+//     Object.values(cueSounds).forEach((sound) => {
+//       sound.muted = true; // Ensure no sound plays during initialization
+//       sound.play().catch(() => {});
+//       sound.pause(); // Pause after unlocking audio
+//       sound.muted = false; // Unmute for future playback
+//     });
+//   }
+// }
+
 function initializeMobileAudio() {
   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     Object.values(cueSounds).forEach((sound) => {
-      sound.muted = true; // Ensure no sound plays during initialization
-      sound.play().catch(() => {});
-      sound.pause(); // Pause after unlocking audio
+      sound.muted = true; // Ensure no sound plays during unlocking
+      sound.play().catch(() => {}); // Attempt to unlock the audio context
+      sound.pause(); // Pause after unlocking
+      sound.currentTime = 0; // Reset to the start
       sound.muted = false; // Unmute for future playback
     });
   }
@@ -262,11 +274,12 @@ function runPhase() {
   const labels = appConfig.phaseLabels[phaseDurations.length];
   const phaseLabel = labels[currentPhase];
 
-  // Stop cue sounds only if in "Hold" phase
+  // Play or stop the cue sound based on the phase
   if (phaseLabel === "Hold") {
+    // Do not play cue sounds during "Hold"
     Object.values(cueSounds).forEach((sound) => {
       sound.pause();
-      sound.currentTime = 0; // Reset cue sound playback
+      sound.currentTime = 0;
     });
   } else {
     playCueSound(currentPhase);

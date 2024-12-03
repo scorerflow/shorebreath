@@ -258,7 +258,7 @@ h1 {
   #app-container {
     z-index: 1;
     margin-top: 20px;
-    width: 90%;
+    width: 95%;
     padding: 10px;
     transform: scale(0.9); /* Scale down the app */
     transform-origin: center top; /* Ensure proper alignment */
@@ -338,7 +338,7 @@ h1 {
   #app-container {
     z-index: 1;
     margin-top: 20px;
-    width: 90%; /* Slightly increase width for better scaling */
+    width: 95%; /* Slightly increase width for better scaling */
     padding: 10px;
     margin: 0 auto;
   }

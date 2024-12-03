@@ -58,17 +58,6 @@ function preloadAudio(audioPaths) {
   }, {});
 }
 
-// function initializeMobileAudio() {
-//   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-//     Object.values(cueSounds).forEach((sound) => {
-//       sound.muted = true; // Ensure no sound plays during initialization
-//       sound.play().catch(() => {});
-//       sound.pause(); // Pause after unlocking audio
-//       sound.muted = false; // Unmute for future playback
-//     });
-//   }
-// }
-
 function initializeMobileAudio() {
   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     const soundsToUnlock = [cueSounds.inhale, cueSounds.exhale];
@@ -77,8 +66,8 @@ function initializeMobileAudio() {
       sound
         .play()
         .then(() => sound.pause())
-        .catch(() => {}); // Ignore any play/pause errors
-      sound.currentTime = 0; // Reset to the beginning
+        .catch(() => {}); // Ignore play/pause errors
+      sound.currentTime = 0; // Reset to the start
       sound.muted = false; // Unmute for future playback
     });
   }
@@ -272,7 +261,7 @@ function playCueSound(phase) {
 
 // Run breathing phases in sequence
 function runPhase() {
-  if (!isBreathing) return;
+  if (!isBreathing) return; // Ensure breathing is active
 
   const labels = appConfig.phaseLabels[phaseDurations.length];
   const phaseLabel = labels[currentPhase];
@@ -291,9 +280,10 @@ function runPhase() {
   syncCircleAnimation(currentPhase, phaseDurations[currentPhase]);
   updatePhaseText(currentPhase);
 
+  // Schedule the next phase
   activeTimer = setTimeout(() => {
     currentPhase = (currentPhase + 1) % phaseDurations.length;
-    runPhase();
+    runPhase(); // Recursively continue the breathing cycle
   }, phaseDurations[currentPhase]);
 }
 
@@ -318,11 +308,10 @@ function toggleBreathing() {
 
 // Start breathing session
 function startBreathing() {
+  if (isBreathing) return; // Prevent duplicate starts
+
   // Reset the app state
   resetBreathingState();
-
-  // Initialize mobile-specific audio contexts
-  initializeMobileAudio();
 
   // Set the app state to "breathing"
   isBreathing = true;

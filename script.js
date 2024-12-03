@@ -73,7 +73,7 @@ function initializeMobileAudio() {
   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     const soundsToUnlock = [cueSounds.inhale, cueSounds.exhale];
     soundsToUnlock.forEach((sound) => {
-      sound.muted = true; // Mute to avoid audio
+      sound.muted = true; // Mute to avoid audio during unlocking
       sound
         .play()
         .then(() => sound.pause())
@@ -318,10 +318,22 @@ function toggleBreathing() {
 
 // Start breathing session
 function startBreathing() {
+  // Reset the app state
   resetBreathingState();
+
+  // Initialize mobile-specific audio contexts
+  initializeMobileAudio();
+
+  // Set the app state to "breathing"
   isBreathing = true;
+
+  // Activate the Start button visuals
   toggleButton.classList.add("active");
+
+  // Manage background sound
   manageBackgroundSound(true);
+
+  // Start the breathing cycle
   runPhase();
 }
 

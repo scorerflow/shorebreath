@@ -71,11 +71,14 @@ function preloadAudio(audioPaths) {
 
 function initializeMobileAudio() {
   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-    Object.values(cueSounds).forEach((sound) => {
-      sound.muted = true; // Ensure no sound plays during unlocking
-      sound.play().catch(() => {}); // Attempt to unlock the audio context
-      sound.pause(); // Pause after unlocking
-      sound.currentTime = 0; // Reset to the start
+    const soundsToUnlock = [cueSounds.inhale, cueSounds.exhale];
+    soundsToUnlock.forEach((sound) => {
+      sound.muted = true; // Mute to avoid audio
+      sound
+        .play()
+        .then(() => sound.pause())
+        .catch(() => {}); // Ignore any play/pause errors
+      sound.currentTime = 0; // Reset to the beginning
       sound.muted = false; // Unmute for future playback
     });
   }

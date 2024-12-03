@@ -58,45 +58,6 @@ function preloadAudio(audioPaths) {
   }, {});
 }
 
-function enableAudioPlaybackOnMobile() {
-  let initialSoundPlayed = false;
-
-  const enablePlayback = () => {
-    if (!initialSoundPlayed) {
-      // Play the inhale sound first
-      const initialPhaseSound = cueSounds.inhale;
-      if (initialPhaseSound) {
-        initialPhaseSound.play().catch(() => initialPhaseSound.pause());
-      }
-
-      // Queue the exhale sound immediately after the inhale
-      const exhaleSound = cueSounds.exhale;
-      if (exhaleSound) {
-        setTimeout(() => {
-          exhaleSound.play().catch(() => exhaleSound.pause());
-        }, 100); // Short delay to queue exhale sound
-      }
-
-      initialSoundPlayed = true;
-    }
-
-    // Preload all sounds
-    Object.values(cueSounds).forEach((sound) => {
-      sound.load();
-    });
-    Object.values(backgroundSounds).forEach((sound) => {
-      sound.load();
-    });
-
-    // Remove event listeners after enabling playback
-    document.body.removeEventListener("click", enablePlayback);
-    document.body.removeEventListener("touchstart", enablePlayback);
-  };
-
-  document.body.addEventListener("click", enablePlayback);
-  document.body.addEventListener("touchstart", enablePlayback);
-}
-
 function manageBackgroundSound(play = false) {
   const activeButton = document.querySelector(
     ".background-sound-button.active"
@@ -269,13 +230,18 @@ function playCueSound(phase) {
     Exhale: cueSounds.exhale,
   };
 
+  // Stop all sounds before playing the new one
   Object.values(cueSounds).forEach((sound) => {
     sound.pause();
     sound.currentTime = 0;
   });
 
+  // Play only if it's not a Hold phase
   if (phaseToSound[phaseLabel]) {
-    phaseToSound[phaseLabel].play().catch(() => {});
+    console.log(`Playing ${phaseLabel} sound`); // Debugging
+    phaseToSound[phaseLabel].play().catch((err) => {
+      console.error(`Error playing ${phaseLabel} sound:`, err);
+    });
   }
 }
 
@@ -283,9 +249,16 @@ function playCueSound(phase) {
 function runPhase() {
   if (!isBreathing) return;
 
+  const labels = appConfig.phaseLabels[phaseDurations.length];
+  const phaseLabel = labels[currentPhase];
+
   updatePhaseText(currentPhase);
   syncCircleAnimation(currentPhase, phaseDurations[currentPhase]);
-  playCueSound(currentPhase);
+
+  // Only play sounds for Inhale/Exhale phases
+  if (phaseLabel !== "Hold") {
+    playCueSound(currentPhase);
+  }
 
   activeTimer = setTimeout(() => {
     currentPhase = (currentPhase + 1) % phaseDurations.length;
@@ -379,10 +352,6 @@ function initializeApp() {
 
 // Attach event listeners
 toggleButton.addEventListener("click", toggleBreathing);
-
-if (isMobileDevice()) {
-  enableAudioPlaybackOnMobile();
-}
 
 // Ensure proper initialization of the app
 initializeApp();

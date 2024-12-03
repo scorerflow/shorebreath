@@ -23,6 +23,7 @@ body {
   background: url("images/snow.PNG") center center / cover no-repeat;
   -webkit-background-size: cover; /* iOS-specific */
   background-attachment: fixed;
+  overflow: hidden; /* Prevent scrolling */
 }
 
 body::before {

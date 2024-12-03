@@ -248,7 +248,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px; /* Adds spacing around the overlay */
+    padding: 5px; /* Adds spacing around the overlay */
     overflow: hidden; /* Prevents background scroll issues */
     box-sizing: border-box;
   }
@@ -332,7 +332,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px; /* Adds spacing around the overlay */
+    padding: 5px; /* Adds spacing around the overlay */
     overflow: hidden; /* Prevents background scroll issues */
     box-sizing: border-box;
   }

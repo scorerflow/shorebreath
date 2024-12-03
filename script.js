@@ -59,19 +59,36 @@ function preloadAudio(audioPaths) {
 }
 
 function enableAudioPlaybackOnMobile() {
+  let initialSoundPlayed = false;
+
   const enablePlayback = () => {
-    // Play only the sound for the first phase (Inhale)
-    const initialPhaseSound = cueSounds.inhale;
-    if (initialPhaseSound) {
-      initialPhaseSound.play().catch(() => initialPhaseSound.pause());
+    if (!initialSoundPlayed) {
+      // Play the inhale sound first
+      const initialPhaseSound = cueSounds.inhale;
+      if (initialPhaseSound) {
+        initialPhaseSound.play().catch(() => initialPhaseSound.pause());
+      }
+
+      // Queue the exhale sound immediately after the inhale
+      const exhaleSound = cueSounds.exhale;
+      if (exhaleSound) {
+        setTimeout(() => {
+          exhaleSound.play().catch(() => exhaleSound.pause());
+        }, 100); // Short delay to queue exhale sound
+      }
+
+      initialSoundPlayed = true;
     }
 
-    // Preload background sounds without playing them
+    // Preload all sounds
+    Object.values(cueSounds).forEach((sound) => {
+      sound.load();
+    });
     Object.values(backgroundSounds).forEach((sound) => {
       sound.load();
     });
 
-    // Remove event listeners after initialization
+    // Remove event listeners after enabling playback
     document.body.removeEventListener("click", enablePlayback);
     document.body.removeEventListener("touchstart", enablePlayback);
   };

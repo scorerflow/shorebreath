@@ -58,6 +58,17 @@ function preloadAudio(audioPaths) {
   }, {});
 }
 
+function initializeMobileAudio() {
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    Object.values(cueSounds).forEach((sound) => {
+      sound.muted = true; // Ensure no sound plays during initialization
+      sound.play().catch(() => {});
+      sound.pause(); // Pause after unlocking audio
+      sound.muted = false; // Unmute for future playback
+    });
+  }
+}
+
 function manageBackgroundSound(play = false) {
   const activeButton = document.querySelector(
     ".background-sound-button.active"
@@ -230,15 +241,14 @@ function playCueSound(phase) {
     Exhale: cueSounds.exhale,
   };
 
-  // Stop all sounds before playing the new one
+  // Stop all sounds first
   Object.values(cueSounds).forEach((sound) => {
     sound.pause();
     sound.currentTime = 0;
   });
 
-  // Play only if it's not a Hold phase
-  if (phaseToSound[phaseLabel]) {
-    console.log(`Playing ${phaseLabel} sound`); // Debugging
+  // Only play sounds if not in "Hold" phase
+  if (phaseLabel && phaseToSound[phaseLabel]) {
     phaseToSound[phaseLabel].play().catch((err) => {
       console.error(`Error playing ${phaseLabel} sound:`, err);
     });
@@ -252,13 +262,15 @@ function runPhase() {
   const labels = appConfig.phaseLabels[phaseDurations.length];
   const phaseLabel = labels[currentPhase];
 
-  updatePhaseText(currentPhase);
-  syncCircleAnimation(currentPhase, phaseDurations[currentPhase]);
-
-  // Only play sounds for Inhale/Exhale phases
-  if (phaseLabel !== "Hold") {
+  // Stop sounds if in "Hold" phase
+  if (phaseLabel === "Hold") {
+    pauseAllSounds();
+  } else {
     playCueSound(currentPhase);
   }
+
+  syncCircleAnimation(currentPhase, phaseDurations[currentPhase]);
+  updatePhaseText(currentPhase);
 
   activeTimer = setTimeout(() => {
     currentPhase = (currentPhase + 1) % phaseDurations.length;
@@ -338,9 +350,11 @@ carouselRightArrow.addEventListener("click", () => {
 
 // Ensure no sounds are playing on load
 function initializeApp() {
+  initializeMobileAudio(); // Mobile-specific audio setup
   setDefaultBackgroundSound();
   toggleIcon.classList.add("fa-play");
   pauseAllSounds();
+
   // Highlight the default breathing technique button
   const defaultTechniqueButton = document.querySelector(
     `.technique-btn[data-technique="${appConfig.defaultTechnique}"]`

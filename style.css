@@ -243,6 +243,14 @@ h1 {
 
 /* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* Add padding to ensure space around the app */
+    box-sizing: border-box;
+  }
+
   body::before {
     z-index: 0; /* Adjust z-index for mobile to avoid conflicts */
   }
@@ -315,6 +323,14 @@ h1 {
 
 /* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px; /* Increase padding for very small screens */
+    box-sizing: border-box;
+  }
+
   body::before {
     z-index: 0; /* Adjust z-index for mobile to avoid conflicts */
   }

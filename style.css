@@ -259,9 +259,8 @@ h1 {
   #app-container {
     z-index: 1;
     margin: auto;
-    width: 90%; /* Slightly reduce width for smaller screens */
+    width: 100%; /* Slightly reduce width for smaller screens */
     max-width: 400px;
-    padding: 15px;
     border-radius: 10px; /* Adjust radius for better scaling */
     transform: scale(0.95); /* Slight scaling down */
     transform-origin: center center;
@@ -344,8 +343,7 @@ h1 {
   #app-container {
     z-index: 1;
     margin: auto;
-    padding: 15px;
-    width: 95%;
+    width: 100%;
     max-width: 350px;
     transform: scale(0.9); /* Slightly smaller scaling for very small screens */
     transform-origin: center center;

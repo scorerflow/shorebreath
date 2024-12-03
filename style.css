@@ -260,11 +260,7 @@ h1 {
   #app-container {
     z-index: 1;
     margin: auto;
-    width: 95%;
-    max-width: 400px;
-    max-height: 90vh;
     padding: 20px;
-    transform: scale(0.9); /* Scale down the app */
     transform-origin: center center; /* Ensure proper alignment */
     box-sizing: border-box;
     overflow-y: auto; /* Allows scrolling if content exceeds height */
@@ -350,9 +346,6 @@ h1 {
     z-index: 1;
     margin: auto;
     padding: 15px; /* Add slight padding to prevent content touch edges */
-    max-width: 90%; /* Slightly reduce the width for better centering */
-    max-height: 90vh; /* Prevent container from exceeding the screen height */
-    overflow-y: auto; /* Enable scrolling for content overflow */
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

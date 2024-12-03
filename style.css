@@ -241,13 +241,13 @@ h1 {
 }
 
 /* Responsive Adjustments for Smaller Screens */
+/* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
   body {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px; /* Adds spacing around the overlay */
-    height: 100vh; /* Ensures the body fills the screen */
     overflow: hidden; /* Prevents background scroll issues */
     box-sizing: border-box;
   }
@@ -259,18 +259,19 @@ h1 {
   #app-container {
     z-index: 1;
     margin: auto;
-    padding: 20px;
-    transform-origin: center center; /* Ensure proper alignment */
+    width: 90%; /* Slightly reduce width for smaller screens */
+    max-width: 400px;
+    padding: 15px;
+    border-radius: 10px; /* Adjust radius for better scaling */
+    transform: scale(0.95); /* Slight scaling down */
+    transform-origin: center center;
     box-sizing: border-box;
     overflow-y: auto; /* Allows scrolling if content exceeds height */
-    display: flex; /* Flexbox for better alignment */
-    flex-direction: column; /* Stacks content vertically */
-    justify-content: center; /* Centers content vertically */
   }
 
   h1 {
     font-size: 1.8rem; /* Reduce heading size */
-    margin-top: 40px;
+    margin-top: 20px;
   }
 
   #technique-carousel-container {
@@ -294,7 +295,7 @@ h1 {
   #bauble-container {
     max-width: 175px;
     max-height: 175px;
-    margin: 35px auto 35px auto;
+    margin: 30px auto;
   }
 
   #circle-text {
@@ -332,7 +333,6 @@ h1 {
     justify-content: center;
     align-items: center;
     padding: 20px; /* Adds spacing around the overlay */
-    height: 100vh; /* Ensures the body fills the screen */
     overflow: hidden; /* Prevents background scroll issues */
     box-sizing: border-box;
   }
@@ -344,40 +344,29 @@ h1 {
   #app-container {
     z-index: 1;
     margin: auto;
-    padding: 15px; /* Add slight padding to prevent content touch edges */
+    padding: 15px;
+    width: 95%;
+    max-width: 350px;
+    transform: scale(0.9); /* Slightly smaller scaling for very small screens */
+    transform-origin: center center;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    overflow-y: auto;
   }
 
   h1 {
-    font-size: 1.8rem; /* Reduce heading size */
-    margin-top: 40px;
+    font-size: 1.5rem; /* Reduce heading size further */
+    margin-top: 20px;
   }
 
   #christmas-text {
-    margin-top: 20px;
-    font-size: 1.5rem; /* Adjust size of "at Christmas" text */
-  }
-
-  #technique-carousel-container {
-    gap: 5px; /* Reduce spacing between buttons and arrows */
-  }
-
-  #technique-carousel .technique-btn {
-    font-size: 0.7rem; /* Make buttons smaller */
-    padding: 5px 10px; /* Reduce padding */
-  }
-
-  .carousel-arrow {
-    font-size: 0.9rem; /* Scale down the arrows */
+    font-size: 1.3rem; /* Adjust size of "at Christmas" text */
+    margin-top: 15px;
   }
 
   #bauble-container {
     max-width: 150px; /* Further reduce bauble size */
     max-height: 150px;
-    margin: 40px auto 40px auto; /* Further increase spacing for very small screens */
+    margin: 30px auto;
   }
 
   #circle-text {
@@ -392,7 +381,7 @@ h1 {
   .background-sound-button {
     font-size: 0.7rem; /* Adjust font size */
     padding: 8px 12px; /* Reduce button padding */
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
   #toggle-button {

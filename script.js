@@ -58,6 +58,28 @@ function preloadAudio(audioPaths) {
   }, {});
 }
 
+function enableAudioPlaybackOnMobile() {
+  const enablePlayback = () => {
+    // Play only the sound for the first phase (Inhale)
+    const initialPhaseSound = cueSounds.inhale;
+    if (initialPhaseSound) {
+      initialPhaseSound.play().catch(() => initialPhaseSound.pause());
+    }
+
+    // Preload background sounds without playing them
+    Object.values(backgroundSounds).forEach((sound) => {
+      sound.load();
+    });
+
+    // Remove event listeners after initialization
+    document.body.removeEventListener("click", enablePlayback);
+    document.body.removeEventListener("touchstart", enablePlayback);
+  };
+
+  document.body.addEventListener("click", enablePlayback);
+  document.body.addEventListener("touchstart", enablePlayback);
+}
+
 function manageBackgroundSound(play = false) {
   const activeButton = document.querySelector(
     ".background-sound-button.active"
@@ -340,6 +362,10 @@ function initializeApp() {
 
 // Attach event listeners
 toggleButton.addEventListener("click", toggleBreathing);
+
+if (isMobileDevice()) {
+  enableAudioPlaybackOnMobile();
+}
 
 // Ensure proper initialization of the app
 initializeApp();

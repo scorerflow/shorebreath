@@ -26,6 +26,7 @@ const appConfig = {
     478: [4000, 7000, 8000],
     resonant: [6000, 6000],
     "2to1": [4000, 8000],
+    426: [4000, 2000, 6000, 1000],
   },
   phaseLabels: {
     2: ["Inhale", "Exhale"],

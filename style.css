@@ -7,7 +7,6 @@ body {
   box-sizing: border-box;
 }
 
-/* General Styling */
 body {
   font-family: "Roboto Flex", sans-serif;
   font-size: 1rem;
@@ -21,9 +20,9 @@ body {
   flex-direction: column;
   position: relative;
   background: url("images/snow.PNG") center center / cover no-repeat;
-  -webkit-background-size: cover; /* iOS-specific */
+  -webkit-background-size: cover;
   background-attachment: fixed;
-  overflow: hidden; /* Prevent scrolling */
+  overflow: hidden;
 }
 
 body::before {
@@ -51,7 +50,6 @@ body::before {
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Main Heading */
 h1 {
   font-family: "Mountains of Christmas", cursive;
   font-size: 2.5rem;
@@ -69,7 +67,6 @@ h1 {
   margin-bottom: 5px;
 }
 
-/* Carousel for Breathing Techniques */
 #technique-carousel-container {
   display: flex;
   align-items: center;
@@ -112,7 +109,6 @@ h1 {
   color: white;
 }
 
-/* Carousel Arrows */
 .carousel-arrow {
   background: none;
   border: none;
@@ -126,16 +122,15 @@ h1 {
   color: #00a375;
 }
 
-/* Breathing Bauble */
 #bauble-container {
   position: relative;
-  width: 200px; /* Adjust size for smaller screens */
+  width: 200px;
   height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: visible;
-  margin: 50px auto 50px auto; /* Default spacing for larger screens */
+  margin: 50px auto 50px auto;
 }
 
 #bauble {
@@ -159,7 +154,6 @@ h1 {
   margin-top: 20px;
 }
 
-/* Controls Container */
 #controls-container {
   display: flex;
   justify-content: space-between;
@@ -196,36 +190,34 @@ h1 {
   color: white;
 }
 
-/* Cue Sounds Button */
 #cue-toggle-button {
   font-family: "Quicksand", sans-serif;
   font-size: 0.8rem;
   padding: 5px 10px;
   border: 1px solid #59785f;
   border-radius: 25px;
-  background-color: #59785f; /* Default active background */
-  color: #ffffff; /* Default active text color */
+  background-color: #59785f;
+  color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: 0 2px 6px rgba(94, 75, 75, 0.1); /* Subtle shadow */
+  box-shadow: 0 2px 6px rgba(94, 75, 75, 0.1);
 }
 
 #cue-toggle-button.inactive {
-  background-color: rgba(247, 249, 250, 0.1); /* Inactive background */
-  color: #59785f; /* Inactive text color */
-  border-color: #59785f; /* Match border color with text */
-  box-shadow: none; /* Remove shadow for inactive state */
+  background-color: rgba(247, 249, 250, 0.1);
+  color: #59785f;
+  border-color: #59785f;
+  box-shadow: none;
 }
 
 #cue-toggle-button:hover:not(.inactive) {
-  background-color: #4b674f; /* Darker green when hovering on active button */
+  background-color: #4b674f;
 }
 
 #cue-toggle-button.inactive:hover {
-  background-color: rgba(247, 249, 250, 0.2); /* Slightly lighter on hover */
+  background-color: rgba(247, 249, 250, 0.2);
 }
 
-/* Start/Stop Button */
 #toggle-button {
   width: 60px;
   height: 60px;
@@ -241,36 +233,34 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Responsive Adjustments for Smaller Screens */
-/* Responsive Adjustments for Smaller Screens */
 @media (max-width: 600px) {
   body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px; /* Adds spacing around the overlay */
-    overflow: hidden; /* Prevents background scroll issues */
+    padding: 5px;
+    overflow: hidden;
     box-sizing: border-box;
   }
 
   body::before {
-    z-index: 0; /* Adjust z-index for mobile to avoid conflicts */
+    z-index: 0;
   }
 
   #app-container {
     z-index: 1;
     margin: auto;
-    width: 100%; /* Slightly reduce width for smaller screens */
+    width: 100%;
     max-width: 400px;
-    border-radius: 10px; /* Adjust radius for better scaling */
-    transform: scale(0.95); /* Slight scaling down */
+    border-radius: 10px;
+    transform: scale(0.95);
     transform-origin: center center;
     box-sizing: border-box;
-    overflow-y: auto; /* Allows scrolling if content exceeds height */
+    overflow-y: auto;
   }
 
   h1 {
-    font-size: 1.8rem; /* Reduce heading size */
+    font-size: 1.8rem;
     margin-top: 20px;
   }
 
@@ -284,12 +274,12 @@ h1 {
   }
 
   #technique-carousel .technique-btn {
-    font-size: 0.8rem; /* Smaller font size */
-    padding: 5px 10px; /* Reduced padding */
+    font-size: 0.8rem;
+    padding: 5px 10px;
   }
 
   .carousel-arrow {
-    font-size: 1rem; /* Reduce arrow size */
+    font-size: 1rem;
   }
 
   #bauble-container {
@@ -299,7 +289,7 @@ h1 {
   }
 
   #circle-text {
-    font-size: 1rem; /* Scale down text inside bauble */
+    font-size: 1rem;
   }
 
   #controls-container {
@@ -310,8 +300,8 @@ h1 {
 
   #background-sound,
   #cue-sound {
-    flex: 1 1 100%; /* Ensure full-width rows for small screens */
-    justify-content: center; /* Center align rows */
+    flex: 1 1 100%;
+    justify-content: center;
   }
 
   .background-sound-button {
@@ -326,19 +316,18 @@ h1 {
   }
 }
 
-/* Media Query for Extremely Small Screens (Max Width: 400px) */
 @media (max-width: 400px) {
   body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px; /* Adds spacing around the overlay */
-    overflow: hidden; /* Prevents background scroll issues */
+    padding: 5px;
+    overflow: hidden;
     box-sizing: border-box;
   }
 
   body::before {
-    z-index: 0; /* Adjust z-index for mobile to avoid conflicts */
+    z-index: 0;
   }
 
   #app-container {
@@ -346,51 +335,51 @@ h1 {
     margin: auto;
     width: 100%;
     max-width: 350px;
-    transform: scale(0.9); /* Slightly smaller scaling for very small screens */
+    transform: scale(0.9);
     transform-origin: center center;
     box-sizing: border-box;
     overflow-y: auto;
   }
 
   h1 {
-    font-size: 1.5rem; /* Reduce heading size further */
+    font-size: 1.5rem;
     margin-top: 20px;
   }
 
   #christmas-text {
-    font-size: 1.3rem; /* Adjust size of "at Christmas" text */
+    font-size: 1.3rem;
     margin-top: 15px;
   }
 
   #bauble-container {
-    max-width: 150px; /* Further reduce bauble size */
+    max-width: 150px;
     max-height: 150px;
     margin: 30px auto;
   }
 
   #circle-text {
-    font-size: 0.9rem; /* Smaller text inside the bauble */
+    font-size: 0.9rem;
   }
 
   #controls-container {
-    flex-wrap: wrap; /* Allow controls to wrap if needed */
-    gap: 5px; /* Reduce spacing between rows */
+    flex-wrap: wrap;
+    gap: 5px;
   }
 
   .background-sound-button {
-    font-size: 0.7rem; /* Adjust font size */
-    padding: 8px 12px; /* Reduce button padding */
+    font-size: 0.7rem;
+    padding: 8px 12px;
     margin-bottom: 15px;
   }
 
   #toggle-button {
-    width: 45px; /* Smaller start/stop button */
+    width: 45px;
     height: 45px;
   }
 
   #cue-sound {
-    flex-direction: column; /* Stack label and button vertically */
-    align-items: center; /* Center-align content */
-    gap: 4px; /* Reduce spacing */
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
   }
 }

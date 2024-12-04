@@ -247,11 +247,11 @@ h1 {
 #overlay-logo {
   position: absolute; /* Allow precise positioning */
   bottom: 10px; /* Position near the bottom of the container */
-  right: 10px; /* Position near the right edge of the container */
+  left: 10px; /* Position near the right edge of the container */
   width: 60px; /* Small size for the logo */
   height: auto;
   z-index: 100; /* Ensure it appears above other elements */
-  opacity: 0.8; /* Slight transparency */
+  opacity: 0.6; /* Slight transparency */
 }
 
 #overlay-logo:hover {
@@ -339,6 +339,10 @@ h1 {
     width: 50px;
     height: 50px;
   }
+
+  #overlay-logo {
+    width: 40px;
+  }
 }
 
 @media (max-width: 400px) {
@@ -406,5 +410,9 @@ h1 {
     flex-direction: column;
     align-items: center;
     gap: 4px;
+  }
+
+  #overlay-logo {
+    width: 40px;
   }
 }

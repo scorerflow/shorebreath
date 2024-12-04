@@ -233,6 +233,16 @@ h1 {
   margin-bottom: 20px;
 }
 
+#toggle-button:not(.active) {
+  background-color: #59785f;
+  border-color: #59785f;
+}
+
+#toggle-button.active {
+  background-color: rgb(215, 78, 78);
+  border-color: rgb(215, 78, 78);
+}
+
 @media (max-width: 600px) {
   body {
     display: flex;

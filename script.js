@@ -300,10 +300,12 @@ function toggleBreathing() {
     startBreathing();
     toggleIcon.classList.remove("fa-play");
     toggleIcon.classList.add("fa-pause");
+    toggleButton.classList.add("active");
   } else {
     resetBreathingState();
     toggleIcon.classList.remove("fa-pause");
     toggleIcon.classList.add("fa-play");
+    toggleButton.classList.remove("active");
   }
 }
 

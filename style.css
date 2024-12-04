@@ -239,8 +239,8 @@ h1 {
 }
 
 #toggle-button.active {
-  background-color: rgb(215, 78, 78);
-  border-color: rgb(215, 78, 78);
+  background-color: rgb(204, 70, 70);
+  border-color: rgb(204, 70, 70);
 }
 
 @media (max-width: 600px) {

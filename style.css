@@ -37,6 +37,7 @@ body::before {
 }
 
 #app-container {
+  position: relative;
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -241,6 +242,20 @@ h1 {
 #toggle-button.active {
   background-color: rgb(204, 70, 70);
   border-color: rgb(204, 70, 70);
+}
+
+#overlay-logo {
+  position: absolute; /* Allow precise positioning */
+  bottom: 10px; /* Position near the bottom of the container */
+  right: 10px; /* Position near the right edge of the container */
+  width: 60px; /* Small size for the logo */
+  height: auto;
+  z-index: 100; /* Ensure it appears above other elements */
+  opacity: 0.8; /* Slight transparency */
+}
+
+#overlay-logo:hover {
+  opacity: 1; /* Fully visible on hover */
 }
 
 @media (max-width: 600px) {

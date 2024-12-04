@@ -231,7 +231,7 @@ h1 {
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
 }
 
 #toggle-button:not(.active) {
@@ -245,17 +245,17 @@ h1 {
 }
 
 #overlay-logo {
-  position: absolute; /* Allow precise positioning */
-  bottom: 10px; /* Position near the bottom of the container */
-  left: 10px; /* Position near the right edge of the container */
-  width: 60px; /* Small size for the logo */
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 60px;
   height: auto;
-  z-index: 100; /* Ensure it appears above other elements */
-  opacity: 0.6; /* Slight transparency */
+  z-index: 100;
+  opacity: 0.6;
 }
 
 #overlay-logo:hover {
-  opacity: 1; /* Fully visible on hover */
+  opacity: 1;
 }
 
 @media (max-width: 600px) {
@@ -338,6 +338,7 @@ h1 {
   #toggle-button {
     width: 50px;
     height: 50px;
+    margin-bottom: 35px;
   }
 
   #overlay-logo {
@@ -404,6 +405,7 @@ h1 {
   #toggle-button {
     width: 45px;
     height: 45px;
+    margin-bottom: 35px;
   }
 
   #cue-sound {
